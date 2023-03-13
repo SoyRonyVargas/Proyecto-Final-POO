@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/darth/Projects/Proyecto Final/Proyecto Final/Proyecto Final.csproj": {}
+    "C:\\Users\\pc-trasversal\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {}
   },
   "projects": {
-    "/Users/darth/Projects/Proyecto Final/Proyecto Final/Proyecto Final.csproj": {
+    "C:\\Users\\pc-trasversal\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/darth/Projects/Proyecto Final/Proyecto Final/Proyecto Final.csproj",
+        "projectUniqueName": "C:\\Users\\pc-trasversal\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
         "projectName": "Proyecto Final",
-        "projectPath": "/Users/darth/Projects/Proyecto Final/Proyecto Final/Proyecto Final.csproj",
-        "packagesPath": "/Users/darth/.nuget/packages/",
-        "outputPath": "/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/",
+        "projectPath": "C:\\Users\\pc-trasversal\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+        "packagesPath": "C:\\Users\\pc-trasversal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc-trasversal\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/darth/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\pc-trasversal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -53,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

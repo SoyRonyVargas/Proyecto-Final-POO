@@ -8,7 +8,6 @@ namespace Proyecto_Final.clases
         [Key]
         public int id { get; set; }
 
-
         public int id_pedido { get; set; }
         public int id_producto { get; set; }
 

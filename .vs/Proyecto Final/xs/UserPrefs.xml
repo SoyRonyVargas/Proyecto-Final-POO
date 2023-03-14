@@ -1,7 +1,13 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CCC76018-6B81-43DC-9B37-BF410BB2EE18}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Proyecto Final/Program.cs">
+﻿<Properties StartupConfiguration="{CCC76018-6B81-43DC-9B37-BF410BB2EE18}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.ItemProperties.Proyecto_220Final PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Proyecto Final/clases/Pedido_tiene_productos.cs">
     <Files>
-      <File FileName="Proyecto Final/Program.cs" Line="6" Column="17" />
+      <File FileName="Proyecto Final/Program.cs" Line="41" Column="1" />
+      <File FileName="Proyecto Final/clases/Context.cs" Line="12" Column="25" />
+      <File FileName="Proyecto Final/clases/Cliente.cs" Line="6" Column="36" />
+      <File FileName="Proyecto Final/clases/Pedido.cs" Line="17" Column="43" />
+      <File FileName="Proyecto Final/clases/Pedido_tiene_productos.cs" Line="14" Column="25" />
+      <File FileName="Proyecto Final/clases/Producto.cs" Line="8" Column="7" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +19,10 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Proyecto_220Final PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
+  <MultiItemStartupConfigurations />
 </Properties>

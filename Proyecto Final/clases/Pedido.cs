@@ -13,8 +13,7 @@ namespace Proyecto_Final.clases
         public int mesa { get; set; }
         public int status { get; set; }
 
-        [ForeignKey("id")]
-        public List<Producto> productos { get; set; }
+        public ICollection<Producto> productos { get; set; }
 	}
 }
 

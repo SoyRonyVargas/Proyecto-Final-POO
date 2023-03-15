@@ -16,6 +16,12 @@ namespace Proyecto_Final.clases
         {
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pedido>()
+                .HasMany(p => p.Pedido_tiene_productos)
+                .WithOne();
+        }
     }
 }
 

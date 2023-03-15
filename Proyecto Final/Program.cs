@@ -1,29 +1,38 @@
 ﻿
 using Proyecto_Final.clases;
+using System.Diagnostics;
 
 class Program
 {
     static void Main(string[] args)
     {
-        using (RestauranteDataContext dc = new RestauranteDataContext())
+
+        Menu menu = new Menu();
+        while( true)
+        {
+            menu.mostrarMenu();
+            Console.ReadKey();
+        }
+
+        /*using (RestauranteDataContext dc = new RestauranteDataContext())
         {
 
-            List<Pedido> pedidos = dc.Pedidos.Where(pedido => pedido.status == 4).ToList();
+            Console.WriteLine("Productos: ");
+            ICollection<Pedido> pedidos = dc.Pedidos.Where(pedido => pedido.status == 4).ToList();
 
             foreach( Pedido _pedido in pedidos )
             {
                 Console.WriteLine($"Status: {_pedido.status}");
                 Console.WriteLine($"Cantidad: {_pedido.cantidad}");
                 Console.WriteLine($"Cantidad:");
-                foreach( Producto producto in _pedido.productos )
-                {
-                    Console.WriteLine($"Producto: {producto.nombre}");
-                }
+                //List<Producto> _Productos = dc.Productos.Where( p => p.PedidoID == _pedido.PedidoID ).ToList();
+                Debugger.Break();
+                //_pedido.Pedido_tiene_productos.ToList()[0].Producto.m
             }
 
             Console.ReadKey();
 
-            Cliente cliente = new Cliente()
+            var cliente = new Cliente()
             {
                 apellido = "Jhordi",
                 nombre = "UCAN",
@@ -32,32 +41,27 @@ class Program
 
             dc.Clientes.Add(cliente);
 
-            Pedido pedido = new Pedido()
+            var pedido = new Pedido()
             {
                 cantidad = 1,
                 mesa = 4,
                 status = 4,
                 tipo_pedido = 0,
             };
-
-
-            Pedido_tiene_productos productos = new Pedido_tiene_productos();
-
-            productos.id_producto = 1;
-
-            productos.id_pedido = 1;
-
+            
             dc.Pedidos.Add(pedido);
          
             dc.SaveChanges();
 
-            Producto p = new Producto()
-            {
-                nombre = "Papas fritas",
-                id_pedido = pedido.id
-            };
+            var productos = new Pedido_tiene_productos();
 
-            dc.Add(p);
+            productos.Producto = dc.Productos.FirstOrDefault();
+
+            productos.Pedido = pedido;
+
+            dc.pedido_tiene_productos.Add(productos);
+
+            //pedido.productos.Add(p);
 
             dc.SaveChanges();
 
@@ -65,6 +69,6 @@ class Program
 
             Console.ReadKey();
 
-        }
+        }/*/
     }
 }

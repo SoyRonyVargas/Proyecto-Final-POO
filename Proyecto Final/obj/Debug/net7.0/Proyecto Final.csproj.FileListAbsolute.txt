@@ -1,35 +1,36 @@
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Proyecto Final
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Proyecto Final.deps.json
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Proyecto Final.runtimeconfig.json
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Proyecto Final.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Proyecto Final.pdb
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.csproj.AssemblyReference.cache
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.GeneratedMSBuildEditorConfig.editorconfig
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.AssemblyInfoInputs.cache
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.AssemblyInfo.cs
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.csproj.CoreCompileInputs.cache
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/refint/Proyecto Final.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.pdb
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.genruntimeconfig.cache
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/ref/Proyecto Final.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Caching.Abstractions.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Caching.Memory.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Configuration.Abstractions.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.DependencyInjection.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Logging.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Logging.Abstractions.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Options.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.Primitives.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/MySqlConnector.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Pomelo.EntityFrameworkCore.MySql.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/obj/Debug/net7.0/Proyecto Final.csproj.CopyComplete
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Humanizer.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/Mono.TextTemplating.dll
-/Users/darth/Projects/Proyecto Final/Proyecto Final/bin/Debug/net7.0/System.CodeDom.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.exe
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.deps.json
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.runtimeconfig.json
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.pdb
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.AssemblyReference.cache
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.AssemblyInfoInputs.cache
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.AssemblyInfo.cs
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.CoreCompileInputs.cache
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.CopyComplete
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\refint\Proyecto Final.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.pdb
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.genruntimeconfig.cache
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\ref\Proyecto Final.dll
+C:\Users\Darth\source\repos\SoyRonyVargas\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Spectre.Console.dll

@@ -15,7 +15,7 @@ namespace ProyectoFinal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Proyecto_Final.clases.Cliente", b =>
@@ -40,7 +40,7 @@ namespace ProyectoFinal.Migrations
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("PedidoID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -56,7 +56,7 @@ namespace ProyectoFinal.Migrations
                     b.Property<int>("tipo_pedido")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("PedidoID");
 
                     b.ToTable("Pedidos");
                 });
@@ -67,23 +67,22 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("id_pedido")
+                    b.Property<int>("PedidoID")
                         .HasColumnType("int");
 
-                    b.Property<int>("id_producto")
+                    b.Property<int>("PedidoID1")
                         .HasColumnType("int");
 
-                    b.Property<int>("pedidoid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("productoid")
+                    b.Property<int>("Productoid")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("pedidoid");
+                    b.HasIndex("PedidoID");
 
-                    b.HasIndex("productoid");
+                    b.HasIndex("PedidoID1");
+
+                    b.HasIndex("Productoid");
 
                     b.ToTable("pedido_tiene_productos");
                 });
@@ -94,53 +93,43 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("id_pedido")
-                        .HasColumnType("int");
-
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
 
-                    b.HasIndex("id_pedido");
-
                     b.ToTable("Productos");
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido_tiene_productos", b =>
                 {
-                    b.HasOne("Proyecto_Final.clases.Pedido", "pedido")
+                    b.HasOne("Proyecto_Final.clases.Pedido", null)
+                        .WithMany("Pedido_tiene_productos")
+                        .HasForeignKey("PedidoID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proyecto_Final.clases.Pedido", "Pedido")
                         .WithMany()
-                        .HasForeignKey("pedidoid")
+                        .HasForeignKey("PedidoID1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Proyecto_Final.clases.Producto", "producto")
+                    b.HasOne("Proyecto_Final.clases.Producto", "Producto")
                         .WithMany()
-                        .HasForeignKey("productoid")
+                        .HasForeignKey("Productoid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("pedido");
+                    b.Navigation("Pedido");
 
-                    b.Navigation("producto");
-                });
-
-            modelBuilder.Entity("Proyecto_Final.clases.Producto", b =>
-                {
-                    b.HasOne("Proyecto_Final.clases.Pedido", "pedido")
-                        .WithMany("productos")
-                        .HasForeignKey("id_pedido")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("pedido");
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>
                 {
-                    b.Navigation("productos");
+                    b.Navigation("Pedido_tiene_productos");
                 });
 #pragma warning restore 612, 618
         }

@@ -37,7 +37,7 @@ namespace ProyectoFinal.Migrations
                 name: "Pedidos",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    PedidoID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     cantidad = table.Column<int>(type: "int", nullable: false),
                     tipopedido = table.Column<int>(name: "tipo_pedido", type: "int", nullable: false),
@@ -46,7 +46,7 @@ namespace ProyectoFinal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pedidos", x => x.id);
+                    table.PrimaryKey("PK_Pedidos", x => x.PedidoID);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -71,22 +71,28 @@ namespace ProyectoFinal.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    idpedido = table.Column<int>(name: "id_pedido", type: "int", nullable: false),
-                    idproducto = table.Column<int>(name: "id_producto", type: "int", nullable: false),
-                    productoid = table.Column<int>(type: "int", nullable: false)
+                    PedidoID1 = table.Column<int>(type: "int", nullable: false),
+                    Productoid = table.Column<int>(type: "int", nullable: false),
+                    PedidoID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_pedido_tiene_productos", x => x.id);
                     table.ForeignKey(
-                        name: "FK_pedido_tiene_productos_Pedidos_id_producto",
-                        column: x => x.idproducto,
+                        name: "FK_pedido_tiene_productos_Pedidos_PedidoID",
+                        column: x => x.PedidoID,
                         principalTable: "Pedidos",
-                        principalColumn: "id",
+                        principalColumn: "PedidoID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_pedido_tiene_productos_Productos_productoid",
-                        column: x => x.productoid,
+                        name: "FK_pedido_tiene_productos_Pedidos_PedidoID1",
+                        column: x => x.PedidoID1,
+                        principalTable: "Pedidos",
+                        principalColumn: "PedidoID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_pedido_tiene_productos_Productos_Productoid",
+                        column: x => x.Productoid,
                         principalTable: "Productos",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -94,14 +100,19 @@ namespace ProyectoFinal.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_pedido_tiene_productos_id_producto",
+                name: "IX_pedido_tiene_productos_PedidoID",
                 table: "pedido_tiene_productos",
-                column: "id_producto");
+                column: "PedidoID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_pedido_tiene_productos_productoid",
+                name: "IX_pedido_tiene_productos_PedidoID1",
                 table: "pedido_tiene_productos",
-                column: "productoid");
+                column: "PedidoID1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pedido_tiene_productos_Productoid",
+                table: "pedido_tiene_productos",
+                column: "Productoid");
         }
 
         /// <inheritdoc />

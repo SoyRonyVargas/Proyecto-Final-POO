@@ -22,7 +22,4 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="clases\" />
-  </ItemGroup>
 </Project>

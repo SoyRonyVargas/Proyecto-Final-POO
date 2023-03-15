@@ -1,5 +1,6 @@
 ﻿using Proyecto_Final.clases;
 using Spectre.Console;
+using System.ComponentModel;
 
 namespace Proyecto_Final.servicios
 {
@@ -52,6 +53,8 @@ namespace Proyecto_Final.servicios
             
             switch (opcion)
             {
+                case 0:
+                    return this.mostrarComponentes();
                 case 1:
                     return this.menuAgregarComponente();
             }
@@ -63,17 +66,67 @@ namespace Proyecto_Final.servicios
         public int menuAgregarComponente()
         {
 
-            var nombre_componente = AnsiConsole.Ask<string>("[green]Ingresa el nombre del componente[/]?");
+            string nombre_componente = AnsiConsole.Ask<string>("[green]Ingresa el nombre del componente[/]?");
+
+            Componente componente = new Componente() { 
+                nombre = nombre_componente
+            };
+
+            AnsiConsole.Status().Start("Guardando componente...", ctx =>
+            {
+
+                this.agregaComponente(componente);
+
+            });
+
+            Console.Clear();
+
+            var rule = new Rule("[red]Componente agregado correctamente[/] \n").LeftJustified();
+
+            AnsiConsole.Write(rule);
 
             return -1;
 
         }
 
-        public bool agregaComponente(Producto producto)
+        public int mostrarComponentes()
         {
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
-                dc.Productos.Add(producto);
+                List<Componente> componentes = dc.Componentes.ToList();
+
+                var table = new Table().LeftAligned();
+
+                AnsiConsole.Live(table)
+                    .Start(ctx =>
+                    {
+                        table.AddColumn("ID");
+                        ctx.Refresh();
+                        Thread.Sleep(1000);
+
+                        table.AddColumn("Nombre Componente");
+                        ctx.Refresh();
+                        Thread.Sleep(1000);
+
+                        foreach ( Componente componente in componentes )
+                        {
+                                table.AddRow(componente.id.ToString() , componente.nombre);
+                        }
+
+            });
+
+                return -1;
+            }
+        }
+
+        public bool agregaComponente( Componente componente )
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                
+                dc.Componentes.Add(componente);
+
+                dc.SaveChanges();
 
                 return true;
 

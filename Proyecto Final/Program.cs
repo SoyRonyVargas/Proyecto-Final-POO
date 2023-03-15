@@ -10,8 +10,13 @@ class Program
         Menu menu = new Menu();
         while( true)
         {
+            
             menu.mostrarMenu();
+
+            Console.WriteLine("Presiona cualquier tecla para continuar...");
+
             Console.ReadKey();
+
         }
 
         /*using (RestauranteDataContext dc = new RestauranteDataContext())

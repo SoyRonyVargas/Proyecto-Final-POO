@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {}
+    "C:\\Users\\Upqroo\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {
+    "C:\\Users\\Upqroo\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+        "projectUniqueName": "C:\\Users\\Upqroo\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
         "projectName": "Proyecto Final",
-        "projectPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
-        "packagesPath": "C:\\Users\\Darth\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
+        "projectPath": "C:\\Users\\Upqroo\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+        "packagesPath": "C:\\Users\\Upqroo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Upqroo\\Documents\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Darth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Upqroo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

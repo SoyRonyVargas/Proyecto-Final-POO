@@ -70,3 +70,39 @@ C:\Users\Upqroo\Documents\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net
 C:\Users\Upqroo\Documents\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.pdb
 C:\Users\Upqroo\Documents\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.genruntimeconfig.cache
 C:\Users\Upqroo\Documents\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\ref\Proyecto Final.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.exe
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.deps.json
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.runtimeconfig.json
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Proyecto Final.pdb
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Logging.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\Spectre.Console.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.AssemblyReference.cache
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.AssemblyInfoInputs.cache
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.AssemblyInfo.cs
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.CoreCompileInputs.cache
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.csproj.CopyComplete
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\refint\Proyecto Final.dll
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.pdb
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\Proyecto Final.genruntimeconfig.cache
+C:\Users\Upqroo\OneDrive - Universidad Politécnica de Quintana Roo\Documentos\GitHub\Proyecto-Final-POO\Proyecto Final\obj\Debug\net7.0\ref\Proyecto Final.dll

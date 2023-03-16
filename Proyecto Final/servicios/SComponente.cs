@@ -165,5 +165,47 @@ namespace Proyecto_Final.servicios
 
             }
         }
+
+        public void eliminarcomp ()
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+
+                AnsiConsole.Status().Start("Cargando componentes...", ctx =>
+                {
+                    Thread.Sleep(500);
+
+                    List <Componente>componentes_seleccionados = new List<Componente>();
+
+                    List <Componente>componentes = dc.Componentes.ToList();
+
+                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
+
+                    var fruits = AnsiConsole.Prompt(
+                    new MultiSelectionPrompt<string>()
+                        .Title("Selecciona los componentes del producto")
+                        .NotRequired() // Not required to have a favorite fruit
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Muevete con las flechas)[/]")
+                        .InstructionsText(
+                            "[grey](Presiona [blue]<espacio>[/] para seleccionar un componente, " +
+                            "[green]<Enter>[/] para aceptar)[/]")
+                        .AddChoices(_componentes));
+
+                    foreach (string select in fruits)
+                    {
+
+                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
+
+                        componentes_seleccionados.Add(cmp);
+
+                        dc.Componentes.Remove(cmp);
+                    }
+
+                    
+                });
+
+            }
+        }
     }
 }

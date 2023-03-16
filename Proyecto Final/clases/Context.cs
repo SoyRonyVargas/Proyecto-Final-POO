@@ -5,7 +5,7 @@ namespace Proyecto_Final.clases
 {
     public class RestauranteDataContext : DbContext
     {
-        static readonly string connectionString = "Server=localhost;port=5506;User ID=root; Password=12345678; Database=restaurante_poo_test";
+        static readonly string connectionString = "Server=localhost;port=3306;User ID=root; Password=12345678; Database=restaurante_poo_test";
 
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }

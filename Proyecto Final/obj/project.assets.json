@@ -1091,19 +1091,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Darth\\.nuget\\packages\\": {}
+    "C:\\Users\\Upqroo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+      "projectUniqueName": "C:\\Users\\Upqroo\\OneDrive - Universidad Politécnica de Quintana Roo\\Documentos\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
       "projectName": "Proyecto Final",
-      "projectPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
-      "packagesPath": "C:\\Users\\Darth\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
+      "projectPath": "C:\\Users\\Upqroo\\OneDrive - Universidad Politécnica de Quintana Roo\\Documentos\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+      "packagesPath": "C:\\Users\\Upqroo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Upqroo\\OneDrive - Universidad Politécnica de Quintana Roo\\Documentos\\GitHub\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Darth\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Upqroo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1164,7 +1164,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

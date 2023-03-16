@@ -42,6 +42,7 @@ namespace Proyecto_Final.clases
             return seleccion == "Confirmar";
 
         }
+
         public void mostrarMenu()
         {
             
@@ -59,7 +60,6 @@ namespace Proyecto_Final.clases
                 new SelectionPrompt<string>()
                     .Title("Selecciona una opcion")
                     .PageSize(10)
-                    //.MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
                     .AddChoices(new[] {
                         "1) Menu",
                         "2) Tomar orden", 
@@ -80,11 +80,11 @@ namespace Proyecto_Final.clases
 
             Console.ReadKey();
 
-            Debugger.Break();
+            // Debugger.Break();
 
             if ( response != -1 )
             {
-                this.mostrarMenu();
+                ///this.mostrarMenu();
             }
 
         }

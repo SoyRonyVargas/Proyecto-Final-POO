@@ -59,9 +59,10 @@ namespace Proyecto_Final.servicios
         {
             switch (opcion)
             {
+                case 0:
+                    return this.mostrarProductos();
                 case 1:
                     return this.menuAgregarProducto();
-                break;
                 default:
                     return 0;
             }
@@ -191,6 +192,66 @@ namespace Proyecto_Final.servicios
 
             }
         }
+
+        private int mostrarProductos()
+        {
+
+            Console.Clear();
+
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+
+                List<Producto> productos = new List<Producto>();
+
+                AnsiConsole.Status().Start("Cargando componentes...", ctx =>
+                {
+                    Thread.Sleep(500);
+
+                    productos = dc.Productos.ToList();
+
+                });
+
+                var table = new Table().Expand().BorderColor(Color.Grey);
+
+                table.AddColumn("[yellow bold]ID[/]");
+                table.AddColumn("[yellow bold]Nombre[/]");
+                table.AddColumn("[yellow bold]Precio[/]");
+
+                Menu.showMainLogo();
+
+                AnsiConsole.Live(table).AutoClear(false)
+                    .Start(ctx =>
+                    {
+
+                        table.Columns[0].Header("[yellow bold]ID[/]");
+
+                        table.Columns[1].Header("[yellow bold]Nombre[/]");
+
+                        table.Columns[1].Header("[yellow bold]Precio[/]");
+
+                        table.Title("Productos").LeftAligned();
+
+                        table.BorderColor(Color.Yellow1);
+
+                        foreach (Producto producto in productos)
+                        {
+                            table.AddRow(
+                                $"[white]{producto.id.ToString()}[/]",
+                                $"[white]{producto.nombre}[/]",
+                                $"[white]${producto.precio.ToString("0.00")}[/]"
+                           );
+                        }
+
+                    });
+
+                return 5;
+
+            }
+
+            return -1;
+
+        }
+
     }
     
 }

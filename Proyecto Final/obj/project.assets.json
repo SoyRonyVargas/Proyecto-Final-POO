@@ -1091,26 +1091,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Darth\\.nuget\\packages\\": {}
+    "/Users/darth/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
+      "projectUniqueName": "/Users/darth/Desktop/Cursos/ React-Avanzado- Fullstack-Nextjs-Apollo-MongoDB-GraphQL /Proyecto-Final-POO/Proyecto Final/Proyecto Final.csproj",
       "projectName": "Proyecto Final",
-      "projectPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\Proyecto Final.csproj",
-      "packagesPath": "C:\\Users\\Darth\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Darth\\source\\repos\\SoyRonyVargas\\Proyecto-Final-POO\\Proyecto Final\\obj\\",
+      "projectPath": "/Users/darth/Desktop/Cursos/ React-Avanzado- Fullstack-Nextjs-Apollo-MongoDB-GraphQL /Proyecto-Final-POO/Proyecto Final/Proyecto Final.csproj",
+      "packagesPath": "/Users/darth/.nuget/packages/",
+      "outputPath": "/Users/darth/Desktop/Cursos/ React-Avanzado- Fullstack-Nextjs-Apollo-MongoDB-GraphQL /Proyecto-Final-POO/Proyecto Final/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Darth\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/darth/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1164,7 +1162,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
       }
     }
   }

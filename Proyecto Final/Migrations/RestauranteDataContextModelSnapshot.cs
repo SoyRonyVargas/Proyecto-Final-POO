@@ -45,11 +45,16 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("Productoid")
+                        .HasColumnType("int");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Productoid");
 
                     b.ToTable("Componentes");
                 });
@@ -109,9 +114,6 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Productoid")
-                        .HasColumnType("int");
-
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -120,8 +122,6 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Productoid");
 
                     b.ToTable("Productos");
                 });
@@ -141,6 +141,13 @@ namespace ProyectoFinal.Migrations
                     b.HasKey("id");
 
                     b.ToTable("producto_tiene_componentes");
+                });
+
+            modelBuilder.Entity("Proyecto_Final.clases.Componente", b =>
+                {
+                    b.HasOne("Proyecto_Final.clases.Producto", null)
+                        .WithMany("componentes")
+                        .HasForeignKey("Productoid");
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido_tiene_productos", b =>
@@ -166,13 +173,6 @@ namespace ProyectoFinal.Migrations
                     b.Navigation("Pedido");
 
                     b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("Proyecto_Final.clases.Producto", b =>
-                {
-                    b.HasOne("Proyecto_Final.clases.Producto", null)
-                        .WithMany("componentes")
-                        .HasForeignKey("Productoid");
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>

@@ -27,7 +27,7 @@ namespace Proyecto_Final.clases
                 new FigletText("La Delicia")
                .LeftJustified()
                .Color(Color.Red));
-        }
+       }
         
         public static bool handleConfirm( string msg = "" )
         {
@@ -50,7 +50,7 @@ namespace Proyecto_Final.clases
 
             Menu.showMainLogo();
 
-            var rule = new Rule("[red]Menu[/] \n").LeftJustified();
+            var rule = new Rule("[red]Menu[/]\n").LeftJustified();
 
             Console.WriteLine("");
 

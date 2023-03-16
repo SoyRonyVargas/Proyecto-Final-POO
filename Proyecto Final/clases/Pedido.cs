@@ -8,12 +8,10 @@ namespace Proyecto_Final.clases
 	{
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PedidoID { get; set; }
-        public int cantidad { get; set; }
+        public int id { get; set; }
         public int tipo_pedido { get; set; }
         public int mesa { get; set; }
         public int status { get; set; }
-        public List<Pedido_tiene_productos> Pedido_tiene_productos { get; set; }
 	}
 }
 

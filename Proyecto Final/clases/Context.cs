@@ -11,7 +11,6 @@ namespace Proyecto_Final.clases
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Componente> Componentes { get; set; }
-
         public DbSet<Pedido_tiene_productos> pedido_tiene_productos { get; set; }
         public DbSet<Producto_tiene_componentes> producto_tiene_componentes { get; set; }
 
@@ -21,9 +20,7 @@ namespace Proyecto_Final.clases
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Pedido>()
-                .HasMany(p => p.Pedido_tiene_productos)
-                .WithOne();
+            
         }
     }
 }

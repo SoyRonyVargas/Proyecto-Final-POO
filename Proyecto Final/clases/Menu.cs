@@ -8,6 +8,7 @@ namespace Proyecto_Final.clases
     {
         private SProducto SProducto = new SProducto();
         private SComponente SComponente = new SComponente();
+        private SPedido SPedido = new SPedido();
 
         public static void setCargando()
         {
@@ -62,7 +63,7 @@ namespace Proyecto_Final.clases
                     .PageSize(10)
                     .AddChoices(new[] {
                         "1) Menu",
-                        "2) Tomar orden", 
+                        "2) Pedidos", 
                         "3) Cobrar orden", 
                         "4) Ventas",
                         "5) Productos",
@@ -96,7 +97,7 @@ namespace Proyecto_Final.clases
             {
                 case "1) Menu":
                     return 0;
-                case "2) Tomar orden":
+                case "2) Pedidos":
                     return 1;
                 case "3) Cobrar orden":
                     return 2;
@@ -116,8 +117,10 @@ namespace Proyecto_Final.clases
         {
             switch(opcion)
             {
+                case 1:
+                    return SPedido.mostrarMenu();
                 case 4:
-                   return SProducto.showMenu();
+                   return SProducto.mostrarMenu();
                 case 5:
                    return SComponente.showMenu();
                 default: return -1;

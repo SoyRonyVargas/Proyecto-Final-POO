@@ -106,12 +106,15 @@ namespace Proyecto_Final.servicios
 
             Console.Clear();
 
+            List<Componente> componentes = new List<Componente>();
+
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
-                List<Componente> componentes = new List<Componente>();
+                
 
                 AnsiConsole.Status().Start("Cargando componentes...", ctx =>
                 {
+                    
                     Thread.Sleep(500);
 
                     componentes = dc.Componentes.ToList();

@@ -34,19 +34,63 @@ namespace ProyectoFinal.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Componentes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Componentes", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "pedido_tiene_productos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    idproducto = table.Column<int>(name: "id_producto", type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pedido_tiene_productos", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
                 {
-                    PedidoID = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    cantidad = table.Column<int>(type: "int", nullable: false),
                     tipopedido = table.Column<int>(name: "tipo_pedido", type: "int", nullable: false),
                     mesa = table.Column<int>(type: "int", nullable: false),
                     status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pedidos", x => x.PedidoID);
+                    table.PrimaryKey("PK_Pedidos", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "producto_tiene_componentes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    idproducto = table.Column<int>(name: "id_producto", type: "int", nullable: false),
+                    idcomponente = table.Column<int>(name: "id_componente", type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_producto_tiene_componentes", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -57,62 +101,14 @@ namespace ProyectoFinal.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    precio = table.Column<float>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Productos", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "pedido_tiene_productos",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PedidoID1 = table.Column<int>(type: "int", nullable: false),
-                    Productoid = table.Column<int>(type: "int", nullable: false),
-                    PedidoID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_pedido_tiene_productos", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_pedido_tiene_productos_Pedidos_PedidoID",
-                        column: x => x.PedidoID,
-                        principalTable: "Pedidos",
-                        principalColumn: "PedidoID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_pedido_tiene_productos_Pedidos_PedidoID1",
-                        column: x => x.PedidoID1,
-                        principalTable: "Pedidos",
-                        principalColumn: "PedidoID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_pedido_tiene_productos_Productos_Productoid",
-                        column: x => x.Productoid,
-                        principalTable: "Productos",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pedido_tiene_productos_PedidoID",
-                table: "pedido_tiene_productos",
-                column: "PedidoID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pedido_tiene_productos_PedidoID1",
-                table: "pedido_tiene_productos",
-                column: "PedidoID1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pedido_tiene_productos_Productoid",
-                table: "pedido_tiene_productos",
-                column: "Productoid");
         }
 
         /// <inheritdoc />
@@ -122,10 +118,16 @@ namespace ProyectoFinal.Migrations
                 name: "Clientes");
 
             migrationBuilder.DropTable(
+                name: "Componentes");
+
+            migrationBuilder.DropTable(
                 name: "pedido_tiene_productos");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");
+
+            migrationBuilder.DropTable(
+                name: "producto_tiene_componentes");
 
             migrationBuilder.DropTable(
                 name: "Productos");

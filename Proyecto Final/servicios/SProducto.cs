@@ -1,4 +1,5 @@
 ﻿using Proyecto_Final.clases;
+using Proyecto_Final.hooks;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Proyecto_Final.servicios
 {
-    public class SProducto
+    public class SProducto : IService
     {
 
-        public int showMenu()
+        public int mostrarMenu()
         {
             
             var opt = AnsiConsole.Prompt(
@@ -85,43 +86,41 @@ namespace Proyecto_Final.servicios
             };
 
             List<Componente> componentes_seleccionados = new List<Componente>();
+            List<string> _componentes = new List<string>();
+            List<Componente> componentes = new List<Componente>();
 
-                AnsiConsole.Status().Start("Cargando componentes", ctx =>
-                {
-
+            AnsiConsole.Status().Start("Cargando componentes", ctx =>
+            {
+                    Thread.Sleep(250);
                     using (RestauranteDataContext dc = new RestauranteDataContext())
                     {
 
-                    List<Componente> componentes_seleccionados = new List<Componente>();
+                        componentes = dc.Componentes.ToList();
 
-                    List<Componente> componentes = dc.Componentes.ToList();
-
-                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
-
-                    var fruits = AnsiConsole.Prompt(
-                        new MultiSelectionPrompt<string>()
-                            .Title("Selecciona los componentes del producto xxx")
-                            .NotRequired()
-                            .PageSize(10)
-                            .MoreChoicesText("[grey](Muevete con las flechas)[/]")
-                            .InstructionsText("[grey](Muevete con las flechas)[/]")
-                            .AddChoices(_componentes));
-
-                    foreach (string select in fruits)
-                    {
-
-                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
-
-                        componentes_seleccionados.Add(cmp);
-
-                    }
+                        _componentes = componentes.Select(c => c.nombre).ToList();
 
                         Console.WriteLine("terminado");
 
-                }
-                    
-
+                    }
             });
+
+            var fruits = AnsiConsole.Prompt(
+                           new MultiSelectionPrompt<string>()
+                               .Title("Selecciona los componentes del producto")
+                               .NotRequired()
+                               .PageSize(10)
+                               .MoreChoicesText("[grey](Muevete con las flechas)[/]")
+                               .InstructionsText("[grey](Muevete con las flechas)[/]")
+                               .AddChoices(_componentes));
+
+            foreach (string seleccionado in fruits)
+            {
+
+                Componente cmp = componentes.Where(c => c.nombre == seleccionado).FirstOrDefault()!;
+
+                componentes_seleccionados.Add(cmp);
+
+            }
 
             Menu.showMainLogo();
 
@@ -197,21 +196,69 @@ namespace Proyecto_Final.servicios
             }
         }
 
-        private int mostrarProductos()
+        public static List<Producto> obtenerProductos()
         {
 
-            Console.Clear();
+            List<Producto> productos = new List<Producto>();
+
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                productos = dc.Productos.ToList();
+                
+                AnsiConsole.Status().Start("Cargando productos...", ctx =>
+                {
+
+                    Thread.Sleep(500);
+
+                    productos = dc.Productos.ToList();
+
+                });
+            }
+
+            return productos;
+
+        }
+
+        public static List<string> obtenerProductosListado()
+        {
+
+            List<Producto> productos = new List<Producto>();
+            List<string> productos_listado = new List<string>();
+
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                productos = dc.Productos.ToList();
+
+                AnsiConsole.Status().Start("Cargando productos...", ctx =>
+                {
+
+                    Thread.Sleep(500);
+
+                    productos = dc.Productos.ToList();
+
+                });
+            }
+
+            productos_listado = productos.Select(producto => producto.nombre).ToList();
+
+            return productos_listado;
+
+        }
+
+        private int mostrarProductos()
+        {
 
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
 
                 List<Producto> productos = new List<Producto>();
 
-                AnsiConsole.Status().Start("Cargando componentes...", ctx =>
+                AnsiConsole.Status().Start("Cargando productos...", ctx =>
                 {
-                    Thread.Sleep(500);
-
+                    
                     productos = dc.Productos.ToList();
+
+                    Thread.Sleep(500);
 
                 });
 
@@ -223,6 +270,8 @@ namespace Proyecto_Final.servicios
 
                 Menu.showMainLogo();
 
+                ConsoleHooks.printRule("[red]Productos[/]");
+
                 AnsiConsole.Live(table).AutoClear(false)
                     .Start(ctx =>
                     {
@@ -232,8 +281,6 @@ namespace Proyecto_Final.servicios
                         table.Columns[1].Header("[yellow bold]Nombre[/]");
 
                         table.Columns[1].Header("[yellow bold]Precio[/]");
-
-                        table.Title("Productos").LeftAligned();
 
                         table.BorderColor(Color.Yellow1);
 
@@ -270,6 +317,20 @@ namespace Proyecto_Final.servicios
             return 6;
         }
 
+        public int listar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int crear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int eliminar()
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

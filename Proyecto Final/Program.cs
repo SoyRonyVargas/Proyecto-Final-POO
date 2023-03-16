@@ -8,10 +8,10 @@ class Program
     {
 
         Menu menu = new Menu();
+        
         while( true)
         {
             menu.mostrarMenu();
-            Console.ReadKey();
         }
 
         /*using (RestauranteDataContext dc = new RestauranteDataContext())

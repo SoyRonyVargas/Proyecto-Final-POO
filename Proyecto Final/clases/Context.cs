@@ -10,7 +10,10 @@ namespace Proyecto_Final.clases
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<Componente> Componentes { get; set; }
+
         public DbSet<Pedido_tiene_productos> pedido_tiene_productos { get; set; }
+        public DbSet<Producto_tiene_componentes> producto_tiene_componentes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

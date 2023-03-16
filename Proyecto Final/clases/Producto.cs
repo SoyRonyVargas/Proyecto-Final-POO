@@ -9,7 +9,8 @@ namespace Proyecto_Final.clases
         
         public int id { get; set; }
 		public string nombre { get; set; }
-
+        public virtual List<Producto> componentes { get; set;} 
+        public float precio { get; set; }
     }
 
 }

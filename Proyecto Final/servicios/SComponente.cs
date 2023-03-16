@@ -1,10 +1,12 @@
 ﻿using Proyecto_Final.clases;
 using Spectre.Console;
+using System.ComponentModel;
 
 namespace Proyecto_Final.servicios
 {
     public class SComponente
     {
+        private const int ROUTER_REDIRECT = 6;
         public int showMenu()
         {
 
@@ -52,6 +54,8 @@ namespace Proyecto_Final.servicios
             
             switch (opcion)
             {
+                case 0:
+                    return this.mostrarComponentes();
                 case 1:
                     return this.menuAgregarComponente();
             }
@@ -60,20 +64,102 @@ namespace Proyecto_Final.servicios
 
         }
 
-        public int menuAgregarComponente()
-        {
-
-            var nombre_componente = AnsiConsole.Ask<string>("[green]Ingresa el nombre del componente[/]?");
-
-            return -1;
-
-        }
-
-        public bool agregaComponente(Producto producto)
+        public static List<Componente> obtenerComponentes()
         {
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
-                dc.Productos.Add(producto);
+                List<Componente> componentes = dc.Componentes.ToList();
+                return componentes;
+            }
+        }
+
+        public int menuAgregarComponente()
+        {
+
+            string nombre_componente = AnsiConsole.Ask<string>("[green]Ingresa el nombre del componente[/]?");
+
+            Componente componente = new Componente() { 
+                nombre = nombre_componente
+            };
+
+            AnsiConsole.Status().Start("Guardando componente...", ctx =>
+            {
+
+                this.agregaComponente(componente);
+
+            });
+
+            Console.Clear();
+
+            Menu.showMainLogo();
+
+            var rule = new Rule("[red]Componente agregado correctamente[/] \n").LeftJustified();
+
+            AnsiConsole.Write(rule);
+
+            return ROUTER_REDIRECT;
+
+        }
+
+        public int mostrarComponentes()
+        {
+
+            Console.Clear();
+
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                List<Componente> componentes = new List<Componente>();
+
+                AnsiConsole.Status().Start("Cargando componentes...", ctx =>
+                {
+                    Thread.Sleep(500);
+
+                    componentes = dc.Componentes.ToList();
+
+                });
+
+                var table = new Table().Expand().BorderColor(Color.Grey);
+                    table.AddColumn("[yellow bold]ID[/]");
+                    table.AddColumn("[yellow bold]Nombre Componente[/]");
+
+                /*.MarkupLine("Press [yellow]CTRL+C[/] to exit"); */
+
+                Menu.showMainLogo();
+
+                AnsiConsole.Live(table).AutoClear(false)
+                    .Start(ctx =>
+                    {
+
+                       
+
+                        table.Columns[0].Header("[yellow bold]ID[/]");
+                        
+                        table.Columns[1].Header("[yellow bold]Nombre Componente[/]");
+                        
+                        table.Title("Componentes").LeftAligned();
+                        
+                        table.BorderColor(Color.Yellow1);
+
+                        foreach ( Componente componente in componentes )
+                        {
+                              table.AddRow( $"[white]{componente.id.ToString()}[/]" , $"[white]{componente.nombre}[/]");
+                        }
+
+                    });
+
+                return ROUTER_REDIRECT;
+
+            }
+        }
+
+        public bool agregaComponente( Componente componente )
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                
+                dc.Componentes.Add(componente);
+
+                dc.SaveChanges();
 
                 return true;
 

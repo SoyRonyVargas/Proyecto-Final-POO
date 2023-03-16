@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_Final.clases;
 
@@ -10,9 +11,11 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    partial class RestauranteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230315180041_InitialCreate5")]
+    partial class InitialCreate5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,31 +119,11 @@ namespace ProyectoFinal.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<float>("precio")
-                        .HasColumnType("float");
-
                     b.HasKey("id");
 
                     b.HasIndex("Productoid");
 
                     b.ToTable("Productos");
-                });
-
-            modelBuilder.Entity("Proyecto_Final.clases.Producto_tiene_componentes", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("id_componente")
-                        .HasColumnType("int");
-
-                    b.Property<int>("id_producto")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("producto_tiene_componentes");
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido_tiene_productos", b =>

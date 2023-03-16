@@ -1,5 +1,6 @@
 ﻿using Proyecto_Final.servicios;
 using Spectre.Console;
+using System.Diagnostics;
 
 namespace Proyecto_Final.clases
 {
@@ -8,15 +9,45 @@ namespace Proyecto_Final.clases
         private SProducto SProducto = new SProducto();
         private SComponente SComponente = new SComponente();
 
+        public static void setCargando()
+        {
+            AnsiConsole.Status().Start("Cargando...", ctx =>
+            {
+                Thread.Sleep(500);
+            });
+        }
+        public static void showMainLogo( bool clear = true )
+        {
+            if( clear )
+            {
+                Console.Clear();
+            }
+
+            AnsiConsole.Write(
+                new FigletText("La Delicia")
+               .LeftJustified()
+               .Color(Color.Red));
+        }
+        
+        public static bool handleConfirm( string msg = "" )
+        {
+            var seleccion = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title(msg)
+                    .PageSize(10)
+                    .AddChoices(new[] {
+                        "Confirmar", "Cancelar"
+                    }));
+
+            return seleccion == "Confirmar";
+
+        }
         public void mostrarMenu()
         {
             
             Console.Clear();
 
-            AnsiConsole.Write(
-                 new FigletText("La Delicia")
-                .LeftJustified()
-                .Color(Color.Red));
+            Menu.showMainLogo();
 
             var rule = new Rule("[red]Menu[/] \n").LeftJustified();
 
@@ -45,9 +76,15 @@ namespace Proyecto_Final.clases
 
             int response = this.handleSeleccion(opcion);
 
-            if( response == 0 )
-            {
+            Console.WriteLine("Presiona cualquier tecla para continuar...");
 
+            Console.ReadKey();
+
+            Debugger.Break();
+
+            if ( response != -1 )
+            {
+                this.mostrarMenu();
             }
 
         }

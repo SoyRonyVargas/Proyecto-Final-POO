@@ -86,7 +86,42 @@ namespace Proyecto_Final.servicios
 
             List<Componente> componentes_seleccionados = new List<Componente>();
 
-            componentes_seleccionados = SComponente.seleccionarComponentes();
+                AnsiConsole.Status().Start("Cargando componentes", ctx =>
+                {
+
+                    using (RestauranteDataContext dc = new RestauranteDataContext())
+                    {
+
+                    List<Componente> componentes_seleccionados = new List<Componente>();
+
+                    List<Componente> componentes = dc.Componentes.ToList();
+
+                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
+
+                    var fruits = AnsiConsole.Prompt(
+                        new MultiSelectionPrompt<string>()
+                            .Title("Selecciona los componentes del producto xxx")
+                            .NotRequired()
+                            .PageSize(10)
+                            .MoreChoicesText("[grey](Muevete con las flechas)[/]")
+                            .InstructionsText("[grey](Muevete con las flechas)[/]")
+                            .AddChoices(_componentes));
+
+                    foreach (string select in fruits)
+                    {
+
+                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
+
+                        componentes_seleccionados.Add(cmp);
+
+                    }
+
+                        Console.WriteLine("terminado");
+
+                }
+                    
+
+            });
 
             Menu.showMainLogo();
 

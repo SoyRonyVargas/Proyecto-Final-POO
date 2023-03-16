@@ -165,10 +165,8 @@ namespace Proyecto_Final.servicios
 
             }
         }
-<<<<<<< Updated upstream
-=======
 
-        public static List<Componente> seleccionarComponentes()
+        public static List<Componente> seleccionarComponentes4()
         {
 
             List<Componente> componentes_seleccionados = new List<Componente>();
@@ -219,7 +217,7 @@ namespace Proyecto_Final.servicios
 
         }
 
-        public static List<Componente> seleccionarComponentes()
+        public static List<Componente> seleccionarComponentes2()
         {
 
             List<Componente> componentes_seleccionados = new List<Componente>();
@@ -270,7 +268,7 @@ namespace Proyecto_Final.servicios
 
         }
 
-        public static List<Componente> seleccionarComponentes()
+        public static List<Componente> seleccionarComponentes3()
         {
 
             List<Componente> componentes_seleccionados = new List<Componente>();
@@ -326,7 +324,7 @@ namespace Proyecto_Final.servicios
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
 
-                AnsiConsole.Status().Start("Cargando componentes xxx...", ctx =>
+                AnsiConsole.Status().Start("Cargando componentes hk...", ctx =>
                 {
                     Thread.Sleep(500);
 
@@ -362,6 +360,5 @@ namespace Proyecto_Final.servicios
 
             }
         }
->>>>>>> Stashed changes
     }
 }

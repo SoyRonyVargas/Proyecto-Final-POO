@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 C:/Users/Darth/source/repos/SoyRonyVargas/Proyecto-Final-POO/Proyecto Final/bin/Debug/net7.0/Proyecto Final.exe
 C:/Users/Darth/source/repos/SoyRonyVargas/Proyecto-Final-POO/Proyecto Final/bin/Debug/net7.0/Proyecto Final.deps.json
 C:/Users/Darth/source/repos/SoyRonyVargas/Proyecto-Final-POO/Proyecto Final/bin/Debug/net7.0/Proyecto Final.runtimeconfig.json
@@ -71,6 +72,8 @@ C:/Users/Upqroo/Documents/GitHub/Proyecto-Final-POO/Proyecto Final/obj/Debug/net
 C:/Users/Upqroo/Documents/GitHub/Proyecto-Final-POO/Proyecto Final/obj/Debug/net7.0/Proyecto Final.pdb
 C:/Users/Upqroo/Documents/GitHub/Proyecto-Final-POO/Proyecto Final/obj/Debug/net7.0/Proyecto Final.genruntimeconfig.cache
 C:/Users/Upqroo/Documents/GitHub/Proyecto-Final-POO/Proyecto Final/obj/Debug/net7.0/ref/Proyecto Final.dll
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 /Users/darth/Desktop/Cursos/ React-Avanzado- Fullstack-Nextjs-Apollo-MongoDB-GraphQL /Proyecto-Final-POO/Proyecto Final/bin/Debug/net7.0/Proyecto Final

@@ -6,7 +6,7 @@ namespace Proyecto_Final.servicios
 {
     public class SPedido : IService
     {
-
+        private const int ROUTER_REDIRECT = 1;
         string[] OPCIONES_MENU = {
             "1) Listar pedidos PENDIENTES",
             "2) Agregar pedido",
@@ -26,9 +26,7 @@ namespace Proyecto_Final.servicios
 
             int seleccion = this.checkMenu(opt);
 
-            this.handleSeleccion(seleccion);
-
-            return -1;
+            return this.handleSeleccion(seleccion);
 
         }
 
@@ -113,7 +111,7 @@ namespace Proyecto_Final.servicios
 
             this.renderTable(pedidos_cobrados);
 
-            return 1;
+            return 0;
 
         }
 
@@ -146,14 +144,14 @@ namespace Proyecto_Final.servicios
             {
                 Menu.showMainLogo();
                 ConsoleHooks.printRule("Orden cobrada");
-                return -1;   
+                return ROUTER_REDIRECT;
             }
 
             Menu.showMainLogo();
             
             ConsoleHooks.printRule("No se pudo cobrar la orden");
 
-            return 6;
+            return ROUTER_REDIRECT;
 
         }
 
@@ -365,10 +363,10 @@ namespace Proyecto_Final.servicios
             }
             catch
             {
-
+                return ROUTER_REDIRECT;
             }
 
-            return -1;
+            return ROUTER_REDIRECT;
 
         }
 
@@ -526,7 +524,7 @@ namespace Proyecto_Final.servicios
 
             this.renderTable(pedidos_pendientes);            
 
-            return -1;
+            return ROUTER_REDIRECT;
 
         }
 

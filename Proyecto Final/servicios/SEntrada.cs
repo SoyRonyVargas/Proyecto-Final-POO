@@ -6,6 +6,7 @@ namespace Proyecto_Final.servicios
 {
     public class SEntrada : IService
     {
+        private const int ROUTER_REDIRECT = 7;
 
         private string[] OPCIONES_MENU = {
             "1) Listar entradas",
@@ -40,9 +41,7 @@ namespace Proyecto_Final.servicios
 
             int seleccion = this.checkMenu(opt);
 
-            this.handleSeleccion(seleccion);
-
-            return -1;
+            return this.handleSeleccion(seleccion);
 
         }
 
@@ -93,7 +92,7 @@ namespace Proyecto_Final.servicios
 
             ConsoleHooks.printRule("[red]Entrada creada correctamente[/]");
 
-            return 1;
+            return ROUTER_REDIRECT;
 
         }
 
@@ -179,7 +178,7 @@ namespace Proyecto_Final.servicios
 
                     });
 
-            return -1;
+            return ROUTER_REDIRECT;
 
         }
         

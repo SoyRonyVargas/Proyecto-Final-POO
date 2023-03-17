@@ -1,18 +1,12 @@
 ﻿using Proyecto_Final.clases;
 using Proyecto_Final.hooks;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proyecto_Final.servicios
 {
     public class SProducto : IService
     {
-
+        private const int ROUTER_REDIRECT = 4;
         public int mostrarMenu()
         {
             
@@ -30,9 +24,7 @@ namespace Proyecto_Final.servicios
 
             int seleccion = this.checkMenu(opt);
 
-            this.handleSeleccion(seleccion);
-
-            return -1;
+            return this.handleSeleccion(seleccion);
 
         }
 
@@ -65,8 +57,6 @@ namespace Proyecto_Final.servicios
                     return this.mostrarProductos();
                 case 1:
                     return this.menuAgregarProducto();
-                case 3:
-                    //return this.eleminar();
                 default:
                     return 0;
             }
@@ -162,11 +152,11 @@ namespace Proyecto_Final.servicios
 
                 AnsiConsole.Write(rule_final);
 
-                return -1;
+                return ROUTER_REDIRECT;
 
             }
 
-            return 0;
+            return ROUTER_REDIRECT;
 
         }
 
@@ -305,11 +295,9 @@ namespace Proyecto_Final.servicios
 
                     });
 
-                return 5;
+                return ROUTER_REDIRECT;
 
             }
-
-            return -1;
 
         }
 
@@ -324,7 +312,8 @@ namespace Proyecto_Final.servicios
 
             //componentes_seleccionados = SComponente.seleccionarComponentes();
 
-            return 6;
+            return ROUTER_REDIRECT;
+
         }
 
         public int listar()

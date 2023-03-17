@@ -1,4 +1,5 @@
 ﻿using Proyecto_Final.clases;
+using Proyecto_Final.hooks;
 using Spectre.Console;
 using System.ComponentModel;
 
@@ -6,7 +7,7 @@ namespace Proyecto_Final.servicios
 {
     public class SComponente
     {
-        private const int ROUTER_REDIRECT = 6;
+        private const int ROUTER_REDIRECT = 5;
         public int showMenu()
         {
 
@@ -60,7 +61,7 @@ namespace Proyecto_Final.servicios
                     return this.menuAgregarComponente();
             }
 
-            return -1;
+            return 0;
 
         }
 
@@ -129,7 +130,6 @@ namespace Proyecto_Final.servicios
 
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
-                
 
                 AnsiConsole.Status().Start("Cargando componentes...", ctx =>
                 {
@@ -144,9 +144,9 @@ namespace Proyecto_Final.servicios
                     table.AddColumn("[yellow bold]ID[/]");
                     table.AddColumn("[yellow bold]Nombre Componente[/]");
 
-                /*.MarkupLine("Press [yellow]CTRL+C[/] to exit"); */
-
                 Menu.showMainLogo();
+                
+                ConsoleHooks.printRule("[red]Componentes[/]");
 
                 AnsiConsole.Live(table).AutoClear(false)
                     .Start(ctx =>
@@ -157,8 +157,6 @@ namespace Proyecto_Final.servicios
                         table.Columns[0].Header("[yellow bold]ID[/]");
                         
                         table.Columns[1].Header("[yellow bold]Nombre Componente[/]");
-                        
-                        table.Title("Componentes").LeftAligned();
                         
                         table.BorderColor(Color.Yellow1);
 
@@ -188,158 +186,9 @@ namespace Proyecto_Final.servicios
             }
         }
 
-        public static List<Componente> seleccionarComponentes4()
-        {
+        
 
-            List<Componente> componentes_seleccionados = new List<Componente>();
-
-            using (RestauranteDataContext dc = new RestauranteDataContext())
-            {
-
-                AnsiConsole.Status().Start("Cargando componentes zzz...", ctx =>
-                {
-
-                    Thread.Sleep(500);
-
-                    List<Componente> componentes_seleccionados = new List<Componente>();
-
-                    List<Componente> componentes = dc.Componentes.ToList();
-
-                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
-
-                    var fruits = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<string>()
-                        .Title("Selecciona los componentes del producto")
-                        .NotRequired() 
-                        .PageSize(10)
-                        .MoreChoicesText("[grey](Muevete con las flechas)[/]")
-                        .InstructionsText(
-                            "[grey](Presiona [blue]<espacio>[/] para seleccionar un componente, " +
-                            "[green]<Enter>[/] para aceptar)[/]")
-                        .AddChoices(_componentes));
-
-                    foreach (string select in fruits)
-                    {
-
-                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
-
-                        componentes_seleccionados.Add(cmp);
-
-                    }
-
-                    return componentes_seleccionados;
-
-                });
-
-                return componentes_seleccionados;
-
-            }
-
-            return componentes_seleccionados;
-
-        }
-
-        public static List<Componente> seleccionarComponentes2()
-        {
-
-            List<Componente> componentes_seleccionados = new List<Componente>();
-
-            using (RestauranteDataContext dc = new RestauranteDataContext())
-            {
-
-                AnsiConsole.Status().Start("Cargando componentes zzz...", ctx =>
-                {
-
-                    Thread.Sleep(500);
-
-                    List<Componente> componentes_seleccionados = new List<Componente>();
-
-                    List<Componente> componentes = dc.Componentes.ToList();
-
-                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
-
-                    var fruits = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<string>()
-                        .Title("Selecciona los componentes del producto")
-                        .NotRequired() 
-                        .PageSize(10)
-                        .MoreChoicesText("[grey](Muevete con las flechas)[/]")
-                        .InstructionsText(
-                            "[grey](Presiona [blue]<espacio>[/] para seleccionar un componente, " +
-                            "[green]<Enter>[/] para aceptar)[/]")
-                        .AddChoices(_componentes));
-
-                    foreach (string select in fruits)
-                    {
-
-                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
-
-                        componentes_seleccionados.Add(cmp);
-
-                    }
-
-                    return componentes_seleccionados;
-
-                });
-
-                return componentes_seleccionados;
-
-            }
-
-            return componentes_seleccionados;
-
-        }
-
-        public static List<Componente> seleccionarComponentes3()
-        {
-
-            List<Componente> componentes_seleccionados = new List<Componente>();
-
-            using (RestauranteDataContext dc = new RestauranteDataContext())
-            {
-
-                AnsiConsole.Status().Start("Cargando componentes zzz...", ctx =>
-                {
-
-                    Thread.Sleep(500);
-
-                    List<Componente> componentes_seleccionados = new List<Componente>();
-
-                    List<Componente> componentes = dc.Componentes.ToList();
-
-                    List<string> _componentes = componentes.Select(c => c.nombre).ToList();
-
-                    var fruits = AnsiConsole.Prompt(
-                    new MultiSelectionPrompt<string>()
-                        .Title("Selecciona los componentes del producto")
-                        .NotRequired() 
-                        .PageSize(10)
-                        .MoreChoicesText("[grey](Muevete con las flechas)[/]")
-                        .InstructionsText(
-                            "[grey](Presiona [blue]<espacio>[/] para seleccionar un componente, " +
-                            "[green]<Enter>[/] para aceptar)[/]")
-                        .AddChoices(_componentes));
-
-                    foreach (string select in fruits)
-                    {
-
-                        Componente cmp = componentes.Where(c => c.nombre == select).FirstOrDefault()!;
-
-                        componentes_seleccionados.Add(cmp);
-
-                    }
-
-                    return componentes_seleccionados;
-
-                });
-
-                return componentes_seleccionados;
-
-            }
-
-            return componentes_seleccionados;
-
-        }
+        
 
         public void eliminarcomp ()
         {

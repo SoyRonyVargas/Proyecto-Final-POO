@@ -45,7 +45,7 @@ namespace Proyecto_Final.clases
 
         }
 
-        public void mostrarMenu()
+        public void mostrarMenu( int? valor = null )
         {
             
             Console.Clear();
@@ -58,35 +58,50 @@ namespace Proyecto_Final.clases
 
             AnsiConsole.Write(rule);
 
-            var opt = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Selecciona una opcion")
-                    .PageSize(10)
-                    .AddChoices(new[] {
-                        "1) Menu",
-                        "2) Pedidos", 
-                        "3) Cobrar pedido", 
-                        "4) Ventas",
-                        "5) Productos",
-                        "6) Componentes", 
-                        "7) Clientes", 
-                        "8) Entradas",
-                        "9) Salir",
-                    }));
+            // Console.WriteLine("Valor de retorno");
+            // Console.WriteLine(valor);
+            // Console.ReadKey();
 
-            int opcion = this.checkMainMenu(opt);
+            int opcion = 0;
+
+            if( valor == null || valor == 0 )
+            {
+                
+                var opt = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Selecciona una opcion")
+                        .PageSize(10)
+                        .AddChoices(new[] {
+                            "1) Menu",
+                            "2) Pedidos", 
+                            "3) Cobrar pedido", 
+                            "4) Ventas",
+                            "5) Productos",
+                            "6) Componentes", 
+                            "7) Clientes", 
+                            "8) Entradas",
+                            "9) Salir",
+                        }));
+
+               opcion = this.checkMainMenu(opt);
+            }
+            else
+            {
+                opcion = (int)valor;
+            }
 
             int response = this.handleSeleccion(opcion);
 
+            // Console.WriteLine("Valor");
+            // Console.WriteLine(valor);
+
             Console.WriteLine("Presiona cualquier tecla para continuar...");
-
+            
             Console.ReadKey();
-
-            // Debugger.Break();
 
             if ( response != -1 )
             {
-                ///this.mostrarMenu();
+                this.mostrarMenu(response);
             }
 
         }

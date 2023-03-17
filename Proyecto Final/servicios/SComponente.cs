@@ -64,6 +64,15 @@ namespace Proyecto_Final.servicios
 
         }
 
+         public static Componente obtenerComponente( int id )
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                Componente componente = dc.Componentes.Where( p => p.id == id ).FirstOrDefault()!;   
+                return componente;
+            }
+        }
+
         public static List<Componente> obtenerComponentes()
         {
             using (RestauranteDataContext dc = new RestauranteDataContext())

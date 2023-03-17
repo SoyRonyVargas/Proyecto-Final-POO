@@ -10,7 +10,7 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    [Migration("20230316215155_InitialCreate")]
+    [Migration("20230317224900_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -56,6 +56,26 @@ namespace ProyectoFinal.Migrations
                     b.ToTable("Componentes");
                 });
 
+            modelBuilder.Entity("Proyecto_Final.clases.Entrada", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("existencias")
+                        .HasColumnType("int");
+
+                    b.Property<int>("existencias_iniciales")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_componente")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Entradas");
+                });
+
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>
                 {
                     b.Property<int>("id")
@@ -83,6 +103,9 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_pedido")
                         .HasColumnType("int");
 
                     b.Property<int>("id_producto")

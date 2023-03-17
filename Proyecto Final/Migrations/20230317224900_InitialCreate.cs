@@ -49,13 +49,30 @@ namespace ProyectoFinal.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Entradas",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    idcomponente = table.Column<int>(name: "id_componente", type: "int", nullable: false),
+                    existenciasiniciales = table.Column<int>(name: "existencias_iniciales", type: "int", nullable: false),
+                    existencias = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entradas", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "pedido_tiene_productos",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     cantidad = table.Column<int>(type: "int", nullable: false),
-                    idproducto = table.Column<int>(name: "id_producto", type: "int", nullable: false)
+                    idproducto = table.Column<int>(name: "id_producto", type: "int", nullable: false),
+                    idpedido = table.Column<int>(name: "id_pedido", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,6 +136,9 @@ namespace ProyectoFinal.Migrations
 
             migrationBuilder.DropTable(
                 name: "Componentes");
+
+            migrationBuilder.DropTable(
+                name: "Entradas");
 
             migrationBuilder.DropTable(
                 name: "pedido_tiene_productos");

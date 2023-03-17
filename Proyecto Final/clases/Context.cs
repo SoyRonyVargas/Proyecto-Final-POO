@@ -17,12 +17,39 @@ namespace Proyecto_Final.clases
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            try
+            {
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            }
+            catch
+            {
+                Console.WriteLine("Error al conectar la base de datos");
+            }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
         }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is BaseEntity && (
+                        e.State == EntityState.Added
+                        || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entityEntry.Entity).CreatedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
     }
 }
 

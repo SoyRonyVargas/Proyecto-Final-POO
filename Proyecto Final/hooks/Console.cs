@@ -28,9 +28,17 @@ namespace Proyecto_Final.hooks
                         }));
         }
 
-        public static string askOpciones( List<string> opciones , string msg = "Selecciona una opcion"  )
+        public static string askOpciones( List<string> opciones , string? msg = "Selecciona una opcion"  )
         {
 
+            if( msg == null )
+            {
+                return AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .PageSize(10)
+                    .AddChoices(opciones));
+            }
+            
             var eleccion = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title($"[red]{msg}[/]?")

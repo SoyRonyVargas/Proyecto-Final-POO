@@ -198,6 +198,14 @@ namespace Proyecto_Final.servicios
             }
         }
 
+        public static Producto obtenerProducto( int id )
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                Producto producto = dc.Productos.Where( p => p.id == id ).FirstOrDefault()!;   
+                return producto;
+            }
+        }
         public static List<Producto> obtenerProductos()
         {
 

@@ -64,7 +64,7 @@ namespace Proyecto_Final.clases
                     .AddChoices(new[] {
                         "1) Menu",
                         "2) Pedidos", 
-                        "3) Cobrar orden", 
+                        "3) Cobrar pedido", 
                         "4) Ventas",
                         "5) Productos",
                         "6) Componentes", 
@@ -99,7 +99,7 @@ namespace Proyecto_Final.clases
                     return 0;
                 case "2) Pedidos":
                     return 1;
-                case "3) Cobrar orden":
+                case "3) Cobrar pedido":
                     return 2;
                 case "4) Ventas":
                     return 3;
@@ -121,6 +121,10 @@ namespace Proyecto_Final.clases
 
                 case 1:
                     return SPedido.mostrarMenu();
+                case 2:
+                    return SPedido.cobrar();
+                case 3:
+                    return SPedido.listarVentas();
                 case 4:
                    return SProducto.mostrarMenu();
                 case 5:

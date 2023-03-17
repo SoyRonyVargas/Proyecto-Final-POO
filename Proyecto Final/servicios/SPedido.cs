@@ -1,9 +1,6 @@
 ﻿using Proyecto_Final.clases;
 using Proyecto_Final.hooks;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Proyecto_Final.servicios
 {
@@ -11,10 +8,10 @@ namespace Proyecto_Final.servicios
     {
 
         string[] OPCIONES_MENU = {
-            "1) Listar pedidos",
+            "1) Listar pedidos PENDIENTES",
             "2) Agregar pedido",
             "3) Actualizar pedido",
-            "4) Finalizar pedido",
+            "4) Cobrar pedido",
             "5) Salir",
         };
 
@@ -39,13 +36,13 @@ namespace Proyecto_Final.servicios
         {
             switch (opcion)
             {
-                case "1) Listar pedidos":
+                case "1) Listar pedidos PENDIENTES":
                     return 0;
                 case "2) Agregar pedido":
                     return 1;
                 case "3) Actualizar pedido":
                     return 2;
-                case "4) Finalizar pedido":
+                case "4) Cobrar pedido":
                     return 3;
                 case "5) Salir":
                     return 4;
@@ -63,6 +60,8 @@ namespace Proyecto_Final.servicios
                     return this.listar();
                 case 1:
                     return this.crear();
+                case 3:
+                    return this.cobrar();
                 default:
                     return 0;
             }
@@ -97,6 +96,91 @@ namespace Proyecto_Final.servicios
             float importe = (cantidad * producto.precio);
 
             return importe.ToString("0.00");
+
+        }
+
+        public int listarVentas()
+        {
+            
+            List<PedidoFull> pedidos_cobrados = new List<PedidoFull>();
+
+            AnsiConsole.Status().Start("Cargando ventas...", ctx =>
+            {
+                pedidos_cobrados = this.obtenerPedidosPorStatus(1);
+            });
+
+            ConsoleHooks.printRule("[red]Ventas:[/]");
+
+            this.renderTable(pedidos_cobrados);
+
+            return 1;
+
+        }
+
+        public int cobrar()
+        {
+
+            this.listar();
+
+            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
+            List<int> pedidos_ids = new List<int>();
+
+            AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+            {
+                pedidos_pendientes = this.obtenerPedidosPorStatus(0);
+                pedidos_ids = pedidos_pendientes.Select( pedido => pedido.pedido.id ).ToList();
+            });
+
+            int orden = ConsoleHooks.askNumero("Selecciona la orden que quieres cobrar: ");
+
+            if( !pedidos_ids.Contains(orden) )
+            {
+                Menu.showMainLogo();
+                ConsoleHooks.printRule("Orden no valida");
+                return -1;
+            }
+
+            bool response = actualizarStatusOrden( orden , 1 );
+
+            if( response )
+            {
+                Menu.showMainLogo();
+                ConsoleHooks.printRule("Orden cobrada");
+                return -1;   
+            }
+
+            Menu.showMainLogo();
+            
+            ConsoleHooks.printRule("No se pudo cobrar la orden");
+
+            return 6;
+
+        }
+
+        public bool actualizarStatusOrden( int id , int status )
+        {
+
+            try
+            {
+
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    
+                    Pedido pedido = dc.Pedidos.Where( pedido => pedido.id == id ).FirstOrDefault()!;
+
+                    pedido.status = status;
+
+                    dc.SaveChanges();
+
+                    return true;
+
+                }
+
+            }
+            catch
+            {
+                return false;
+            }
 
         }
 
@@ -368,20 +452,9 @@ namespace Proyecto_Final.servicios
             throw new NotImplementedException();
         }
 
-        public int listar()
+        public void renderTable( List<PedidoFull> pedidos_pendientes )
         {
-
-            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
-
-            AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
-            {
-
-                pedidos_pendientes = this.obtenerPedidosPendientes();
-
-            });
-
-            ConsoleHooks.printRule("[red]Pedidos pendientes:[/]");
-
+            
             var table = new Table();
             
             table.Expand();
@@ -437,12 +510,28 @@ namespace Proyecto_Final.servicios
 
             AnsiConsole.Write(table_pedidos);
 
+        }
+
+        public int listar()
+        {
+
+            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
+
+            AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+            {
+                pedidos_pendientes = this.obtenerPedidosPorStatus(0);
+            });
+
+            ConsoleHooks.printRule("[red]Pedidos pendientes:[/]");
+
+            this.renderTable(pedidos_pendientes);            
+
             return -1;
 
         }
 
 
-        private List<PedidoFull> obtenerPedidosPendientes()
+        private List<PedidoFull> obtenerPedidosPorStatus( int status = 0 )
         {
 
             List <PedidoFull> pedidos = new List<PedidoFull>();
@@ -450,7 +539,7 @@ namespace Proyecto_Final.servicios
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
 
-               List<Pedido> pedidos_pendientes = dc.Pedidos.Where(pedido => pedido.status == 0).ToList();
+               List<Pedido> pedidos_pendientes = dc.Pedidos.Where(pedido => pedido.status == status ).ToList();
 
                foreach( Pedido _pedido in pedidos_pendientes )
                {
@@ -462,9 +551,6 @@ namespace Proyecto_Final.servicios
                     List<Producto> productos_pedido = new List<Producto>();
                     
                     pedido.pedido_tiene_productos = productos_por_pedido;
-
-                    // Console.WriteLine("pedidos");
-                    // Console.WriteLine(productos_por_pedido.Count);
 
                     foreach(Pedido_tiene_productos pedido_tiene_productos in productos_por_pedido)
                     {

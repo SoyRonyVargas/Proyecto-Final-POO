@@ -72,6 +72,16 @@ namespace Proyecto_Final.servicios
                 return componentes;
             }
         }
+        
+        public static List<string> obtenerComponentesListado()
+        {
+            using (RestauranteDataContext dc = new RestauranteDataContext())
+            {
+                List<Componente> componentes = dc.Componentes.ToList();
+                List<string> c = componentes.Select( x => x.nombre ).ToList();
+                return c;
+            }
+        }
 
         public int menuAgregarComponente()
         {

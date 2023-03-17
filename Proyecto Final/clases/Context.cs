@@ -13,6 +13,7 @@ namespace Proyecto_Final.clases
         public DbSet<Componente> Componentes { get; set; }
         public DbSet<Pedido_tiene_productos> pedido_tiene_productos { get; set; }
         public DbSet<Producto_tiene_componentes> producto_tiene_componentes { get; set; }
+        public DbSet<Entrada> Entradas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -9,6 +9,7 @@ namespace Proyecto_Final.clases
         private SProducto SProducto = new SProducto();
         private SComponente SComponente = new SComponente();
         private SPedido SPedido = new SPedido();
+        private SEntrada SEntrada = new SEntrada();
 
         public static void setCargando()
         {
@@ -107,6 +108,8 @@ namespace Proyecto_Final.clases
                     return 4;
                 case "6) Componentes":
                     return 5;
+                case "8) Entradas":
+                    return 7;
             }
 
             return -1;
@@ -127,6 +130,8 @@ namespace Proyecto_Final.clases
                    return SProducto.mostrarMenu();
                 case 5:
                    return SComponente.showMenu();
+                case 7:
+                   return SEntrada.mostrarMenu();
                 default: return -1;
             }
         }

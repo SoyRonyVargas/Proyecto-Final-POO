@@ -68,6 +68,38 @@ namespace Proyecto_Final.servicios
             }
         }
 
+        private string calcularTotalOrden(List<Producto> productos, List<int> cantidades)
+        {
+
+            float total = 0;
+            int i = 0;
+
+            foreach(Producto producto in productos )
+            {
+
+                int cantidad_producto = cantidades[i];
+
+                float importe = (cantidad_producto * producto.precio);
+
+                total += importe;
+
+                i++;
+
+            }
+
+            return total.ToString("0.00");
+
+        }
+
+        private string calcularImporteConcepto(Producto producto, int cantidad)
+        {
+
+            float importe = (cantidad * producto.precio);
+
+            return importe.ToString("0.00");
+
+        }
+
         public int crear()
         {
             
@@ -86,21 +118,33 @@ namespace Proyecto_Final.servicios
                 List<string> producto_listado = SProducto.obtenerProductosListado();
                 List<Producto> productos = SProducto.obtenerProductos();
 
+                // SELECCIONAMOS LOS PRODUCTOS
+
                 var selecciones = AnsiConsole.Prompt(
                            new MultiSelectionPrompt<string>()
                                .Required()
                                .AddChoices(producto_listado));
 
                 List<Producto> productos_seleccionados = new List<Producto>();
+                List<int> cantidades = new List<int>();
+
+                // AGREGAMOS A LA LISTA LOS PRODUCTOS SELECCIONADOS
+                // Y INGRESAMOS LA CANTIDAD DE CADA PRODUCTO
 
                 foreach (string seleccionado in selecciones)
                 {
 
                     Producto cmp = productos.Where(c => c.nombre == seleccionado ).FirstOrDefault()!;
 
+                    int cantidad = ConsoleHooks.askNumero($"Ingresa la cantidad de {cmp.nombre}:");
+
+                    cantidades.Add(cantidad);
+
                     productos_seleccionados.Add(cmp);
 
                 }
+
+                // SELECCIONAMOS EL TIPO DE PEDIDO
 
                 var tipo_pedido = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -109,6 +153,8 @@ namespace Proyecto_Final.servicios
                         .AddChoices(new[] {
                             "1) Comer aqui", "2) Para llevar",
                         }));
+
+                // SI ES PARA COMER AQUI
 
                 if( tipo_pedido == "1) Comer aqui" ) {
 
@@ -141,12 +187,13 @@ namespace Proyecto_Final.servicios
 
                 ConsoleHooks.printRule("[red]Pedido:[/]");
 
+                // AGREGAMOS LA TABLA
+
                 var table_pedido = new Table();
 
                 table_pedido.BorderColor(Color.Yellow1);
                 table_pedido.Expand();
 
-                // Add some columns
                 table_pedido.AddColumn("Numero Orden");
                 table_pedido.AddColumn("Tipo Pedido");
                 table_pedido.AddColumn("Status");
@@ -177,40 +224,48 @@ namespace Proyecto_Final.servicios
                     .Start(ctx =>
                     {
 
-                        void Update(int delay, Action action)
-                        {
-                            action();
-                            ctx.Refresh();
-                            Thread.Sleep(delay);
-                        }
-
                         table.AddColumn("[bold]Producto[/]");
                         table.AddColumn("[bold]Cantidad[/]");
+                        table.AddColumn("[bold]Precio Pieza[/]");
                         table.AddColumn("[bold]Importe[/]");
 
                         table.Columns[0].Header("[bold]Producto[/]");
                         table.Columns[1].Header("[bold]Cantidad[/]");
-                        table.Columns[2].Header("[bold]Importe[/]");
+                        table.Columns[2].Header("[bold]Precio Pieza[/]");
+                        table.Columns[3].Header("[bold]Importe[/]");
+
+                        int i = 0;
+
+                        string total_orden = this.calcularTotalOrden(productos_seleccionados, cantidades);
 
                         foreach ( Producto producto in productos_seleccionados )
                         {
+                            int cantidad_producto = cantidades[i];
+
+                            string importe = calcularImporteConcepto(producto, cantidad_producto );
+
                             table.AddRow(
                                 $"[bold]{producto.nombre}[/]",
-                                "[bold]3[/]",
-                                "[bold]$99.99[/]"
+                                $"[bold]{cantidad_producto}[/]",
+                                $"[bold]${producto.precio}[/]",
+                                $"[bold]${importe}[/]"
                             );
+
+                            i++;
+
                         }
 
-                        Update(70, () => table.Columns[0].Footer(""));
-                        Update(70, () => table.Columns[1].Footer(""));
-                        Update(400, () => table.Columns[2].Footer("[red bold]Total: $10,318,030,576[/]"));
+                        table.Columns[0].Footer("");
+                        table.Columns[1].Footer("");
+                        table.Columns[2].Footer("");
+                        table.Columns[3].Footer($"[red bold]Total: ${total_orden}[/]");
 
                     });
 
                 Console.WriteLine("");
                 Console.WriteLine("");
 
-                bool response = this.agregarPedido( pedido_nuevo , productos_seleccionados );
+                bool response = this.agregarPedido( pedido_nuevo , productos_seleccionados , cantidades );
 
                 if( response )
                 {
@@ -233,7 +288,7 @@ namespace Proyecto_Final.servicios
 
         }
 
-        private bool agregarPedido( Pedido pedido , List<Producto> productos)
+        private bool agregarPedido( Pedido pedido , List<Producto> productos , List<int> cantidades )
         {
 
             try
@@ -246,16 +301,26 @@ namespace Proyecto_Final.servicios
 
                     dc.SaveChanges();
 
+                    int i = 0;
+
                     foreach (Producto producto in productos)
                     {
 
+                        int cantidad = cantidades[i];
+
+                        // Console.WriteLine("cantidad del producto");
+                        // Console.WriteLine(cantidad);
+
                         Pedido_tiene_productos elemento = new Pedido_tiene_productos()
                         {
-                            cantidad = 1,
-                            id_producto = producto.id
+                            cantidad = cantidad,
+                            id_producto = producto.id,
+                            id_pedido = pedido.id
                         };
 
                         dc.pedido_tiene_productos.Add(elemento);
+
+                        i++;
 
                     }
 
@@ -273,6 +338,31 @@ namespace Proyecto_Final.servicios
 
         }
 
+        public static string checkTipoPedido( int tipo )
+        {
+            if( tipo == 0 )
+            {
+                return "Para comer aqui";
+            }
+
+            return "Para llevar";
+        }
+
+        public static string checkStatus( int status )
+        {
+            if( status == 0 )
+            {
+                return "Pendiente";
+            }
+            
+            if( status == 1 )
+            {
+                return "Terminado/Cobrado";
+            }
+
+            return "Cancelado";
+        }
+
         public int eliminar()
         {
             throw new NotImplementedException();
@@ -281,59 +371,74 @@ namespace Proyecto_Final.servicios
         public int listar()
         {
 
+            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
+
+            AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+            {
+
+                pedidos_pendientes = this.obtenerPedidosPendientes();
+
+            });
+
             ConsoleHooks.printRule("[red]Pedidos pendientes:[/]");
 
             var table = new Table();
             
             table.Expand();
 
-            // Add some columns
             table.AddColumn(new TableColumn("[u]Productos[/]"));
-            // table.AddColumn("Numero Pedido");
-            // table.AddColumn("Tipo ");
-            // table.AddColumn("Mesa");
-            // table.AddColumn("Status");
-
-
-            var tabla_productos = new Table()
-                .Border(TableBorder.Rounded)
-                .BorderColor(Color.Green)
-                .Expand()
-                .AddColumn(new TableColumn("[u]Foo[/]"))
-                .AddColumn(new TableColumn("[u]Bar[/]"))
-                .AddColumn(new TableColumn("[u]Baz[/]"))
-                .AddRow("Hello", "[red]World![/]", "")
-                .AddRow("[blue]Hej[/]", "[yellow]Världen![/]", "");
 
             var table_pedidos = new Table()
+                .BorderColor(Color.Yellow1)
+                .Border(TableBorder.Rounded)
                 .Centered()
                 .Expand()
-                .BorderColor(Color.Yellow1)
-                .Border(TableBorder.DoubleEdge)
-                .AddColumn(new TableColumn(new Panel("[bold u]Numero Pedido[/]").BorderColor(Color.Red)))
-                .AddColumn(new TableColumn(new Panel("[bold u]Tipo[/]").BorderColor(Color.Green)))
-                .AddColumn(new TableColumn(new Panel("[bold u]Mesa[/]").BorderColor(Color.Blue)))
-                .AddColumn(new TableColumn(new Panel("[bold u]Status[/]").BorderColor(Color.Blue)))
-                .AddColumn(new TableColumn(new Panel("[bold u]Productos[/]").BorderColor(Color.Blue)));
+                .AddColumn(new TableColumn("[bold u]Numero Pedido[/]"))
+                .AddColumn(new TableColumn("[bold u]Tipo[/]"))
+                .AddColumn(new TableColumn("[bold u]Mesa[/]"))
+                .AddColumn(new TableColumn("[bold u]Status[/]"))
+                .AddColumn(new TableColumn("[bold u]Productos[/]"));
 
-
-            List<PedidoFull> pedidos_pendientes = this.obtenerPedidosPendientes();
 
             foreach (PedidoFull pedido in pedidos_pendientes)
             {
+
+                var tabla_productos = new Table()
+                    .BorderColor(Color.Green)
+                    .Border(TableBorder.Rounded)
+                    .Expand()
+                    .AddColumn(new TableColumn("[u]Producto[/]"))
+                    .AddColumn(new TableColumn("[u]Cantidad[/]"));
+
+                int i = 0;
+
+                foreach( Producto producto in pedido.productos )
+                {
+
+                    int cantidad = pedido.pedido_tiene_productos[i].cantidad;
+
+                    tabla_productos.AddRow(
+                        $"[blue]{producto.nombre}[/]",
+                        $"[yellow]{cantidad}[/]"
+                    );
+
+                    i++;
+
+                }
+
                 table_pedidos.AddRow(
                     new Markup($"[u]{pedido.pedido.id}[/]"),
-                    new Markup($"[u]Para comer aqui[/]"),
-                    new Markup($"[u]5[/]"),
-                    new Markup($"[u]Pendiente[/]"),
+                    new Markup($"[u]{checkTipoPedido(pedido.pedido.tipo_pedido)}[/]"),
+                    new Markup($"[u]{pedido.pedido.mesa}[/]"),
+                    new Markup($"[u]{checkStatus(pedido.pedido.status)}[/]"),
                     tabla_productos
                 );
             }
 
-            // Render the table to the console
             AnsiConsole.Write(table_pedidos);
 
             return -1;
+
         }
 
 
@@ -353,8 +458,14 @@ namespace Proyecto_Final.servicios
                     PedidoFull pedido = new PedidoFull();
 
                     List<Pedido_tiene_productos> productos_por_pedido = dc.pedido_tiene_productos.Where(pedido => pedido.id_pedido == _pedido.id ).ToList();
+                    
                     List<Producto> productos_pedido = new List<Producto>();
                     
+                    pedido.pedido_tiene_productos = productos_por_pedido;
+
+                    // Console.WriteLine("pedidos");
+                    // Console.WriteLine(productos_por_pedido.Count);
+
                     foreach(Pedido_tiene_productos pedido_tiene_productos in productos_por_pedido)
                     {
 
@@ -372,9 +483,9 @@ namespace Proyecto_Final.servicios
 
                }
 
-            }
+               return pedidos;
 
-            return pedidos;
+            }
 
         }
        

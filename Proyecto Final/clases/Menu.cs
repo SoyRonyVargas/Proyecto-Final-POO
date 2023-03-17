@@ -117,6 +117,8 @@ namespace Proyecto_Final.clases
         {
             switch(opcion)
             {
+                case 0:
+
                 case 1:
                     return SPedido.mostrarMenu();
                 case 4:

@@ -69,7 +69,7 @@ namespace Proyecto_Final.clases
                         "5) Productos",
                         "6) Componentes", 
                         "7) Clientes", 
-                        "8) Proveedores",
+                        "8) Entradas",
                         "9) Salir",
                     }));
 
@@ -117,8 +117,6 @@ namespace Proyecto_Final.clases
         {
             switch(opcion)
             {
-                case 0:
-
                 case 1:
                     return SPedido.mostrarMenu();
                 case 2:

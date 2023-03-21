@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 
 namespace Proyecto_Final.clases
@@ -19,7 +20,13 @@ namespace Proyecto_Final.clases
         {
             try
             {
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+                // SI OCUPAS SQLSERVER USA ESTA
+                optionsBuilder.UseSqlServer("Server=localhost;Database=la_delicia ;Trusted_Connection=SSPI;MultipleActiveResultSets=true;Trust Server Certificate=true");
+                
+                // SI OCUPAS MYSQL USA ESTA
+                //optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
             }
             catch
             {

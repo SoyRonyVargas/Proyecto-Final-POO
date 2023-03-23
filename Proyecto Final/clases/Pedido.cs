@@ -15,6 +15,7 @@ namespace Proyecto_Final.clases
                 public string producto { get; set; }
                 public float importe { get; set; }
                 public float iva { get; set; }
+                public float total { get; set; }
 	}
 }
 

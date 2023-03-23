@@ -74,10 +74,7 @@ namespace Proyecto_Final.clases
                             "3) Cobrar pedido", 
                             "4) Ventas",
                             "5) Productos",
-                            "6) Componentes", 
-                            "7) Clientes", 
-                            "8) Entradas",
-                            "9) Salir",
+                            "6) Salir",
                         }));
 
                opcion = this.checkMainMenu(opt);
@@ -118,10 +115,8 @@ namespace Proyecto_Final.clases
                     return 3;
                 case "5) Productos":
                     return 4;
-                case "6) Componentes":
-                    return 5;
-                case "8) Entradas":
-                    return 7;
+                case "6) Salir":
+                    return -1;
             }
 
             return -1;

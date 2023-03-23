@@ -76,7 +76,7 @@ namespace Proyecto_Final.servicios
 
                 int cantidad_producto = cantidades[i];
 
-                float importe = (cantidad_producto * producto.precio);
+                float importe = (cantidad_producto * 1);
 
                 total += importe;
 
@@ -91,7 +91,7 @@ namespace Proyecto_Final.servicios
         private string calcularImporteConcepto(Producto producto, int cantidad)
         {
 
-            float importe = (cantidad * producto.precio);
+            float importe = (cantidad);
 
             return importe.ToString("0.00");
 
@@ -100,7 +100,7 @@ namespace Proyecto_Final.servicios
         public int listarVentas()
         {
             
-            List<PedidoFull> pedidos_cobrados = new List<PedidoFull>();
+            List<Pedido> pedidos_cobrados = new List<Pedido>();
 
             AnsiConsole.Status().Start("Cargando ventas...", ctx =>
             {
@@ -120,13 +120,13 @@ namespace Proyecto_Final.servicios
 
             this.listar();
 
-            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
+            List<Pedido> pedidos_pendientes = new List<Pedido>();
             List<int> pedidos_ids = new List<int>();
 
             AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
             {
                 pedidos_pendientes = this.obtenerPedidosPorStatus(0);
-                pedidos_ids = pedidos_pendientes.Select( pedido => pedido.pedido.id ).ToList();
+                pedidos_ids = pedidos_pendientes.Select( pedido => pedido.id ).ToList();
             });
 
             int orden = ConsoleHooks.askNumero("Selecciona la orden que quieres cobrar: ");
@@ -397,8 +397,11 @@ namespace Proyecto_Final.servicios
                     new Markup($"[u]{pedido.id}[/]"),
                     new Markup($"[u]{checkTipoPedido(pedido.tipo_pedido)}[/]"),
                     new Markup($"[u]{pedido.mesa}[/]"),
-                    new Markup($"[u]{checkStatus(pedido.status)}[/]");
-                    // new Markup($"[u]{pedido.}[/]")
+                    new Markup($"[u]{checkStatus(pedido.status)}[/]"),
+                    new Markup($"[u]{pedido.producto}[/]"),
+                    new Markup($"[u]{pedido.importe}[/]"),
+                    new Markup($"[u]{pedido.iva}[/]"),
+                    new Markup($"[u]{pedido.total}[/]")
                 );
             }
 
@@ -409,7 +412,7 @@ namespace Proyecto_Final.servicios
         public int listar()
         {
 
-            List<PedidoFull> pedidos_pendientes = new List<PedidoFull>();
+            List<Pedido> pedidos_pendientes = new List<Pedido>();
 
             AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
             {
@@ -425,43 +428,15 @@ namespace Proyecto_Final.servicios
         }
 
 
-        private List<PedidoFull> obtenerPedidosPorStatus( int status = 0 )
+        private List<Pedido> obtenerPedidosPorStatus( int status = 0 )
         {
 
-            List <PedidoFull> pedidos = new List<PedidoFull>();
+            List<Pedido> pedidos = new List<Pedido>();
 
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
 
-               List<Pedido> pedidos_pendientes = dc.Pedidos.Where(pedido => pedido.status == status ).ToList();
-
-               foreach( Pedido _pedido in pedidos_pendientes )
-               {
-                    
-                    PedidoFull pedido = new PedidoFull();
-
-                    List<Pedido_tiene_productos> productos_por_pedido = dc.pedido_tiene_productos.Where(pedido => pedido.id_pedido == _pedido.id ).ToList();
-                    
-                    List<Producto> productos_pedido = new List<Producto>();
-                    
-                    pedido.pedido_tiene_productos = productos_por_pedido;
-
-                    foreach(Pedido_tiene_productos pedido_tiene_productos in productos_por_pedido)
-                    {
-
-                        Producto producto = dc.Productos.Where(p => p.id == pedido_tiene_productos.id_producto).FirstOrDefault()!;
-
-                        productos_pedido.Add(producto);
-
-                    }
-
-                    pedido.productos = productos_pedido;
-
-                    pedido.pedido = _pedido;
-
-                    pedidos.Add(pedido);
-
-               }
+               pedidos = dc.Pedidos.Where(pedido => pedido.status == status ).ToList();
 
                return pedidos;
 

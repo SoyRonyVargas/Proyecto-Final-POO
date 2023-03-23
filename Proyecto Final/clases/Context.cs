@@ -8,6 +8,7 @@ namespace Proyecto_Final.clases
     {
         static readonly string connectionString = "Server=localhost;port=5506;User ID=root; Password=12345678; Database=restaurante_poo_test";
 
+        public DbSet<Producto> Productos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

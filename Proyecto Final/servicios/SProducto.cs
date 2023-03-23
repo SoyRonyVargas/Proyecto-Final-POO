@@ -167,15 +167,6 @@ namespace Proyecto_Final.servicios
             using (RestauranteDataContext dc = new RestauranteDataContext())
             {
                 productos = dc.Productos.ToList();
-
-                AnsiConsole.Status().Start("Cargando productos...", ctx =>
-                {
-
-                    Thread.Sleep(500);
-
-                    productos = dc.Productos.ToList();
-
-                });
             }
 
             productos_listado = productos.Select(producto => producto.nombre).ToList();

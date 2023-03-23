@@ -16,6 +16,7 @@ namespace Proyecto_Final.clases
                 public float importe { get; set; }
                 public float iva { get; set; }
                 public float total { get; set; }
+                public int? tipo_cobro { get; set; }
 	}
 }
 

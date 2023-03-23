@@ -7,9 +7,7 @@ namespace Proyecto_Final.hooks
         public static void printRule( string msg )
         {
             var rule = new Rule(msg).LeftJustified();
-
             AnsiConsole.Write(rule);
-
         }
 
         public static int askNumero( string msg = "" , string error = "Ingresa un valor valido" )

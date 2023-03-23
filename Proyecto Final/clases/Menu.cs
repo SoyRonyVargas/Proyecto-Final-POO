@@ -1,11 +1,12 @@
 ﻿using Proyecto_Final.servicios;
-using Spectre.Console;
 using System.Diagnostics;
-
+using Spectre.Console;
+// using Spectre.Console.ImageSharp;
 namespace Proyecto_Final.clases
 {
     public class Menu
     {
+        private SProducto SProducto = new SProducto();
         private SPedido SPedido = new SPedido();
 
         public static void setCargando()
@@ -133,6 +134,8 @@ namespace Proyecto_Final.clases
                     return SPedido.cobrar();
                 case 3:
                     return SPedido.listarVentas();
+                case 4:
+                    return SProducto.mostrarMenu();
                 default: return -1;
             }
         }

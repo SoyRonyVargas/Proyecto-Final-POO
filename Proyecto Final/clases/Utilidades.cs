@@ -1,5 +1,3 @@
-using System;
-
 namespace Proyecto_Final.clases
 {
     public class Utilidades

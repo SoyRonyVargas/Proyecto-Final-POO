@@ -190,6 +190,8 @@ namespace Proyecto_Final.servicios
 
                 Menu.showMainLogo();
 
+                // CREO EL PEDIDO
+
                 Pedido pedido_nuevo = new Pedido()
                 {
                     mesa = 0
@@ -197,34 +199,17 @@ namespace Proyecto_Final.servicios
 
                 ConsoleHooks.printRule("[red]Selecciona los productos de la orden[/]");
 
+                // ME TRAIGO LOS PRODUCTOS DE LA BASE DE DATOS
                 List<string> producto_listado = SProducto.obtenerProductosListado();
                 List<Producto> productos = SProducto.obtenerProductos();
 
-                // SELECCIONAMOS LOS PRODUCTOS
+                // SELECCIONAMOS EL PRODUCTO
 
-                var selecciones = AnsiConsole.Prompt(
-                           new MultiSelectionPrompt<string>()
-                               .Required()
-                               .AddChoices(producto_listado));
+                var producto = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .AddChoices(producto_listado));
 
-                List<Producto> productos_seleccionados = new List<Producto>();
-                List<int> cantidades = new List<int>();
-
-                // AGREGAMOS A LA LISTA LOS PRODUCTOS SELECCIONADOS
-                // Y INGRESAMOS LA CANTIDAD DE CADA PRODUCTO
-
-                foreach (string seleccionado in selecciones)
-                {
-
-                    Producto cmp = productos.Where(c => c.nombre == seleccionado ).FirstOrDefault()!;
-
-                    int cantidad = ConsoleHooks.askNumero($"Ingresa la cantidad de {cmp.nombre}:");
-
-                    cantidades.Add(cantidad);
-
-                    productos_seleccionados.Add(cmp);
-
-                }
+                pedido_nuevo.producto = producto;
 
                 // SELECCIONAMOS EL TIPO DE PEDIDO
 
@@ -242,18 +227,7 @@ namespace Proyecto_Final.servicios
 
                     pedido_nuevo.tipo_pedido = 0;
 
-                    int mesa = AnsiConsole.Prompt(
-                        new TextPrompt<int>("[red]Ingresa el numero de mesa:[/]")
-                            .PromptStyle("red")
-                            .ValidationErrorMessage("[red]Ingresa una mesa valida[/]")
-                            .Validate(age =>
-                            {
-                                return age switch
-                                {
-                                    <= 0 => ValidationResult.Error("[red]Ingresa una mesa valida[/]"),
-                                    _ => ValidationResult.Success(),
-                                };
-                            }));
+                    int mesa = ConsoleHooks.askNumero("Ingresa el numero de mesa");
 
                     pedido_nuevo.mesa = mesa;
 
@@ -262,6 +236,19 @@ namespace Proyecto_Final.servicios
                 {
                     pedido_nuevo.tipo_pedido = 1;
                 }
+
+                // PEDIMOS EL IMPORTE
+
+                float importe = ConsoleHooks.askDecimal("[red]Ingresa el importe del pedido[/]");
+                
+                pedido_nuevo.importe = importe;
+
+                pedido_nuevo.iva = (float)(importe * 0.16);
+
+                // 0 - PENDIENTE
+                // 1 - TERMINADO
+                
+                // DECLARO QUE SEA 0 PORQUE SIGNIFICA 'PENDIENTE'
 
                 pedido_nuevo.status = 0;
 
@@ -280,12 +267,20 @@ namespace Proyecto_Final.servicios
                 table_pedido.AddColumn("Tipo Pedido");
                 table_pedido.AddColumn("Status");
                 table_pedido.AddColumn("Mesa");
+                table_pedido.AddColumn("Producto");
+                table_pedido.AddColumn("Importe");
+                table_pedido.AddColumn("IVA");
+                table_pedido.AddColumn("Total");
 
                 table_pedido.AddRow(
                     $"1",
                     $"{(pedido_nuevo.tipo_pedido == 0 ? "Comer Aqui" : "Para llevar")}",
                     $"Pendiente",
-                    $"9"
+                    $"{pedido_nuevo.mesa}",
+                    $"{pedido_nuevo.producto}",
+                    $"{pedido_nuevo.importe}",
+                    $"{pedido_nuevo.iva}",
+                    $"{pedido_nuevo.importe}"
                 );
                 
                 AnsiConsole.Write(table_pedido);
@@ -293,61 +288,7 @@ namespace Proyecto_Final.servicios
                 Console.WriteLine("");
                 Console.WriteLine("");
 
-                ConsoleHooks.printRule("[red]Productos del pedido:[/]");
-
-                var table = new Table().Expand().RightAligned();
-
-                table.BorderColor(Color.Yellow1);
-
-                AnsiConsole.Live(table)
-                    .AutoClear(false)
-                    .Overflow(VerticalOverflow.Ellipsis)
-                    .Cropping(VerticalOverflowCropping.Top)
-                    .Start(ctx =>
-                    {
-
-                        table.AddColumn("[bold]Producto[/]");
-                        table.AddColumn("[bold]Cantidad[/]");
-                        table.AddColumn("[bold]Precio Pieza[/]");
-                        table.AddColumn("[bold]Importe[/]");
-
-                        table.Columns[0].Header("[bold]Producto[/]");
-                        table.Columns[1].Header("[bold]Cantidad[/]");
-                        table.Columns[2].Header("[bold]Precio Pieza[/]");
-                        table.Columns[3].Header("[bold]Importe[/]");
-
-                        int i = 0;
-
-                        string total_orden = this.calcularTotalOrden(productos_seleccionados, cantidades);
-
-                        foreach ( Producto producto in productos_seleccionados )
-                        {
-                            int cantidad_producto = cantidades[i];
-
-                            string importe = calcularImporteConcepto(producto, cantidad_producto );
-
-                            table.AddRow(
-                                $"[bold]{producto.nombre}[/]",
-                                $"[bold]{cantidad_producto}[/]",
-                                $"[bold]${producto.precio}[/]",
-                                $"[bold]${importe}[/]"
-                            );
-
-                            i++;
-
-                        }
-
-                        table.Columns[0].Footer("");
-                        table.Columns[1].Footer("");
-                        table.Columns[2].Footer("");
-                        table.Columns[3].Footer($"[red bold]Total: ${total_orden}[/]");
-
-                    });
-
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                bool response = this.agregarPedido( pedido_nuevo , productos_seleccionados , cantidades );
+                bool response = this.agregarPedido( pedido_nuevo );
 
                 if( response )
                 {
@@ -370,7 +311,7 @@ namespace Proyecto_Final.servicios
 
         }
 
-        private bool agregarPedido( Pedido pedido , List<Producto> productos , List<int> cantidades )
+        private bool agregarPedido( Pedido pedido )
         {
 
             try
@@ -380,31 +321,6 @@ namespace Proyecto_Final.servicios
                 {
 
                     dc.Pedidos.Add(pedido);
-
-                    dc.SaveChanges();
-
-                    int i = 0;
-
-                    foreach (Producto producto in productos)
-                    {
-
-                        int cantidad = cantidades[i];
-
-                        // Console.WriteLine("cantidad del producto");
-                        // Console.WriteLine(cantidad);
-
-                        Pedido_tiene_productos elemento = new Pedido_tiene_productos()
-                        {
-                            cantidad = cantidad,
-                            id_producto = producto.id,
-                            id_pedido = pedido.id
-                        };
-
-                        dc.pedido_tiene_productos.Add(elemento);
-
-                        i++;
-
-                    }
 
                     dc.SaveChanges();
 
@@ -450,14 +366,14 @@ namespace Proyecto_Final.servicios
             throw new NotImplementedException();
         }
 
-        public void renderTable( List<PedidoFull> pedidos_pendientes )
+        public void renderTable( List<Pedido> pedidos_pendientes )
         {
             
             var table = new Table();
             
             table.Expand();
 
-            table.AddColumn(new TableColumn("[u]Productos[/]"));
+            // table.AddColumn(new TableColumn("[u]Productos[/]"));
 
             var table_pedidos = new Table()
                 .BorderColor(Color.Yellow1)
@@ -468,41 +384,21 @@ namespace Proyecto_Final.servicios
                 .AddColumn(new TableColumn("[bold u]Tipo[/]"))
                 .AddColumn(new TableColumn("[bold u]Mesa[/]"))
                 .AddColumn(new TableColumn("[bold u]Status[/]"))
-                .AddColumn(new TableColumn("[bold u]Productos[/]"));
+                .AddColumn(new TableColumn("[bold u]Producto[/]"))
+                .AddColumn(new TableColumn("[bold u]Importe[/]"))
+                .AddColumn(new TableColumn("[bold u]IVA[/]"))
+                .AddColumn(new TableColumn("[bold u]Total[/]"));
 
 
-            foreach (PedidoFull pedido in pedidos_pendientes)
+            foreach (Pedido pedido in pedidos_pendientes)
             {
 
-                var tabla_productos = new Table()
-                    .BorderColor(Color.Green)
-                    .Border(TableBorder.Rounded)
-                    .Expand()
-                    .AddColumn(new TableColumn("[u]Producto[/]"))
-                    .AddColumn(new TableColumn("[u]Cantidad[/]"));
-
-                int i = 0;
-
-                foreach( Producto producto in pedido.productos )
-                {
-
-                    int cantidad = pedido.pedido_tiene_productos[i].cantidad;
-
-                    tabla_productos.AddRow(
-                        $"[blue]{producto.nombre}[/]",
-                        $"[yellow]{cantidad}[/]"
-                    );
-
-                    i++;
-
-                }
-
                 table_pedidos.AddRow(
-                    new Markup($"[u]{pedido.pedido.id}[/]"),
-                    new Markup($"[u]{checkTipoPedido(pedido.pedido.tipo_pedido)}[/]"),
-                    new Markup($"[u]{pedido.pedido.mesa}[/]"),
-                    new Markup($"[u]{checkStatus(pedido.pedido.status)}[/]"),
-                    tabla_productos
+                    new Markup($"[u]{pedido.id}[/]"),
+                    new Markup($"[u]{checkTipoPedido(pedido.tipo_pedido)}[/]"),
+                    new Markup($"[u]{pedido.mesa}[/]"),
+                    new Markup($"[u]{checkStatus(pedido.status)}[/]");
+                    // new Markup($"[u]{pedido.}[/]")
                 );
             }
 

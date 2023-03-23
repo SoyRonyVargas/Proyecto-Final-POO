@@ -6,10 +6,7 @@ namespace Proyecto_Final.clases
 {
     public class Menu
     {
-        private SProducto SProducto = new SProducto();
-        private SComponente SComponente = new SComponente();
         private SPedido SPedido = new SPedido();
-        private SEntrada SEntrada = new SEntrada();
 
         public static void setCargando()
         {
@@ -141,12 +138,6 @@ namespace Proyecto_Final.clases
                     return SPedido.cobrar();
                 case 3:
                     return SPedido.listarVentas();
-                case 4:
-                   return SProducto.mostrarMenu();
-                case 5:
-                   return SComponente.showMenu();
-                case 7:
-                   return SEntrada.mostrarMenu();
                 default: return -1;
             }
         }

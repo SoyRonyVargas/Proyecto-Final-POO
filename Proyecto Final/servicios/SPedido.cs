@@ -226,7 +226,7 @@ namespace Proyecto_Final.servicios
 
                 // SELECCIONAMOS EL TIPO DE PEDIDO
 
-                var tipo_pedido = AnsiConsole.Prompt(
+                string tipo_pedido = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Selecciona el tipo de pedido:")
                         .PageSize(3)
@@ -319,9 +319,16 @@ namespace Proyecto_Final.servicios
                 ConsoleHooks.printRule("[yellow]Error: no se pudo agregar el pedido[/]");
 
             }
-            catch
+            catch( Exception e )
             {
+                
+                System.Console.WriteLine(e);
+                System.Console.WriteLine(e.Message);
+
+                ConsoleHooks.printRule("[yellow]Error: no se pudo agregar el pedido[/]");
+
                 return ROUTER_REDIRECT;
+
             }
 
             return ROUTER_REDIRECT;
@@ -481,11 +488,18 @@ namespace Proyecto_Final.servicios
 
         private int obtenerUltimoIdOrden()
         {
-            using (RestauranteDataContext dc = new RestauranteDataContext())
+            try
             {
-                Pedido pedido = dc.Pedidos.OrderBy(x=>x.id).LastOrDefault()!;
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    Pedido pedido = dc.Pedidos.OrderBy(x=>x.id).LastOrDefault()!;
 
-                return pedido.id + 1;
+                    return pedido.id + 1;
+                }
+            }
+            catch
+            {
+                return 1;
             }
         }
        

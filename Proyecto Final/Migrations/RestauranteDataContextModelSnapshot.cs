@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_Final.clases;
 
@@ -18,9 +17,7 @@ namespace ProyectoFinal.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>
                 {
@@ -28,20 +25,18 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
                     b.Property<float>("importe")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<float>("iva")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<int>("mesa")
                         .HasColumnType("int");
 
                     b.Property<string>("producto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -53,7 +48,7 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("total")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.HasKey("id");
 
@@ -66,11 +61,9 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 

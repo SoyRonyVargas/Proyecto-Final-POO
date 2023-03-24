@@ -67,7 +67,7 @@ namespace Proyecto_Final.servicios
         public int menuAgregarProducto()
         {
             
-            var nombre_producto = AnsiConsole.Ask<string>("[green]Ingresa el nombre del producto[/]?");
+            var nombre_producto = AnsiConsole.Ask<string>("[green]Ingresa el nombre del producto:[/]");
             
             Producto producto = new Producto()
             {
@@ -192,7 +192,9 @@ namespace Proyecto_Final.servicios
 
                 });
 
-                var table = new Table().Expand().BorderColor(Color.Grey);
+                Table table = new Table().Expand().BorderColor(Color.Grey);
+
+                table.Border(TableBorder.Rounded);
 
                 table.AddColumn("[yellow bold]ID[/]");
                 table.AddColumn("[yellow bold]Nombre[/]");

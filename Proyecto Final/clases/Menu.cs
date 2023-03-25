@@ -1,15 +1,13 @@
 ﻿using Proyecto_Final.servicios;
-using Spectre.Console;
 using System.Diagnostics;
-
+using Spectre.Console;
+// using Spectre.Console.ImageSharp;
 namespace Proyecto_Final.clases
 {
     public class Menu
     {
         private SProducto SProducto = new SProducto();
-        private SComponente SComponente = new SComponente();
         private SPedido SPedido = new SPedido();
-        private SEntrada SEntrada = new SEntrada();
 
         public static void setCargando()
         {
@@ -77,10 +75,7 @@ namespace Proyecto_Final.clases
                             "3) Cobrar pedido", 
                             "4) Ventas",
                             "5) Productos",
-                            "6) Componentes", 
-                            "7) Clientes", 
-                            "8) Entradas",
-                            "9) Salir",
+                            "6) Salir",
                         }));
 
                opcion = this.checkMainMenu(opt);
@@ -121,10 +116,8 @@ namespace Proyecto_Final.clases
                     return 3;
                 case "5) Productos":
                     return 4;
-                case "6) Componentes":
-                    return 5;
-                case "8) Entradas":
-                    return 7;
+                case "6) Salir":
+                    return -1;
             }
 
             return -1;
@@ -142,11 +135,7 @@ namespace Proyecto_Final.clases
                 case 3:
                     return SPedido.listarVentas();
                 case 4:
-                   return SProducto.mostrarMenu();
-                case 5:
-                   return SComponente.showMenu();
-                case 7:
-                   return SEntrada.mostrarMenu();
+                    return SProducto.mostrarMenu();
                 default: return -1;
             }
         }

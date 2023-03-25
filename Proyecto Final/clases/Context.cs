@@ -8,13 +8,8 @@ namespace Proyecto_Final.clases
     {
         static readonly string connectionString = "Server=localhost;port=5506;User ID=root; Password=12345678; Database=restaurante_poo_test";
 
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Producto> Productos { get; set; }
-        public DbSet<Componente> Componentes { get; set; }
-        public DbSet<Pedido_tiene_productos> pedido_tiene_productos { get; set; }
-        public DbSet<Producto_tiene_componentes> producto_tiene_componentes { get; set; }
-        public DbSet<Entrada> Entradas { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,10 +17,10 @@ namespace Proyecto_Final.clases
             {
 
                 // SI OCUPAS SQLSERVER USA ESTA
-                optionsBuilder.UseSqlServer("Server=localhost;Database=la_delicia ;Trusted_Connection=SSPI;MultipleActiveResultSets=true;Trust Server Certificate=true");
+                //optionsBuilder.UseSqlServer("Server=localhost;Database=la_delicia ;Trusted_Connection=SSPI;MultipleActiveResultSets=true;Trust Server Certificate=true");
                 
                 // SI OCUPAS MYSQL USA ESTA
-                //optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             }
             catch

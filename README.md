@@ -1,9 +1,10 @@
 
 # La Delicia
 
-[![N|Solid](https://i.ibb.co/s3ZsPh4/la-delicia-low-resolution-color-logo.png =350x250)](https://nodesource.com/products/nsolid)
+<img src="https://i.ibb.co/s3ZsPh4/la-delicia-low-resolution-color-logo.png " data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="300" height="220" />
 
 Instrucciones para arrancar el proyecto
+
 ## Necesitas
 - Visual Studio
 - Docker , Xampp O SqlServer

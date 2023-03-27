@@ -19,6 +19,12 @@ namespace Proyecto_Final.servicios
             "4) Cobrar pedido",
             "5) Salir",
         };
+        
+        string[] OPCIONES_ACTUALIZAR_PEDIDO = {
+            "1) Tipo pedido",
+            "2) Mesa",
+            "3) Productos",
+        };
 
         // OPCIONES DE COBRO
         private List<string> OPCIONES_COBRO = new List<string>() {
@@ -75,6 +81,8 @@ namespace Proyecto_Final.servicios
                     return this.listar();
                 case 1:
                     return this.crear();
+                case 2:
+                    return this.actualizar();
                 case 3:
                     return this.cobrar();
                 default:
@@ -114,6 +122,27 @@ namespace Proyecto_Final.servicios
 
         }
 
+        public bool hayPedidos()
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    bool bandera = false;
+                    AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+                    {
+                        bandera = dc.Pedidos.Where( pedido => pedido.status == 0 ).Count() > 0;
+                    });
+
+                    return bandera;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         // FUNCION QUE LISTA LAS VENTAS (PEDIDOS CON STATUS 1)
         public int listarVentas()
         {
@@ -126,6 +155,15 @@ namespace Proyecto_Final.servicios
                 // NOS TRAEMOS LOS PEDIDOS CON STATUS 1 "TERMINADO"
                 pedidos_cobrados = this.obtenerPedidosPorStatus(1);
             });
+
+            if( pedidos_cobrados.Count == 0 )
+            {
+
+                ConsoleHooks.printRule("[red]Sin ventas[/]");
+
+                return ROUTER_REDIRECT;
+
+            }
 
             ConsoleHooks.printRule("[red]Ventas:[/]");
 
@@ -153,6 +191,11 @@ namespace Proyecto_Final.servicios
                 // OBTENEMOS LOS PEDIDOS POR SUS IDS
                 pedidos_ids = pedidos_pendientes.Select( pedido => pedido.id ).ToList();
             });
+
+            if( pedidos_pendientes.Count == 0 )
+            {
+                return ROUTER_REDIRECT;
+            }
 
             // PEDIMOS AL USUARIO QUE NOS INGRESE EL ID DEL PEDIDO
             int orden = ConsoleHooks.askNumero("Selecciona la orden que quieres cobrar: ");
@@ -259,6 +302,59 @@ namespace Proyecto_Final.servicios
             }
 
         }
+        
+        private double obtenerPrecioProducto( string nombre_producto )
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    return dc.Productos.Where( producto => producto.nombre == nombre_producto ).FirstOrDefault()!.precio;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        private string preguntarProductos( List<string> producto_listado , Pedido? pedido = null )
+        {
+            
+            ConsoleHooks.printRule("[red]Selecciona los productos de la orden:[/]");
+
+            // SELECCIONAMOS EL PRODUCTO
+
+            var productos = ConsoleHooks.askMultiOpciones(producto_listado , "");
+
+            string producto = "";
+
+            float importe_general = 0;
+
+            foreach( string _producto in productos )
+            {
+                
+                int cantidad = ConsoleHooks.askNumero($"Ingresa la cantidad de {_producto}: ");
+
+                double precio = obtenerPrecioProducto(_producto);
+
+                float importe = (float)(cantidad * precio);
+                string _importe = Utilidades.renderDinero((float)(cantidad * precio));
+
+                producto += $"{cantidad} x {_producto} (${importe})\n";
+
+                importe_general = importe_general + importe;
+
+            }
+
+            if( pedido != null )
+            {
+                pedido.importe = importe_general;
+            }
+
+            return producto;
+
+        }
+        
         // FUNCION QUE CREA EL PEDIDO
         public int crear()
         {
@@ -287,18 +383,13 @@ namespace Proyecto_Final.servicios
                 
                 Menu.showMainLogo();
                 
-                ConsoleHooks.printRule("[red]Selecciona los productos de la orden:[/]");
-
-                // SELECCIONAMOS EL PRODUCTO
-
-                var producto = ConsoleHooks.askOpciones(producto_listado);
+                string producto = this.preguntarProductos(producto_listado , pedido_nuevo);
 
                 pedido_nuevo.producto = producto;
 
-
                 // SELECCIONAMOS EL TIPO DE PEDIDO
 
-                string tipo_pedido = AnsiConsole.Prompt(
+                var tipo_pedido = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Selecciona el tipo de pedido:")
                         .PageSize(3)
@@ -326,15 +417,15 @@ namespace Proyecto_Final.servicios
 
                 // PEDIMOS EL IMPORTE
 
-                float importe = ConsoleHooks.askDecimal("[red]Ingresa el importe del pedido:[/]");
+                // float importe = ConsoleHooks.askDecimal("[red]Ingresa el importe del pedido:[/]");
                 
-                pedido_nuevo.importe = importe;
+                // pedido_nuevo.importe = importe;
 
                 // CALCULAMOS EL IVA 16%
-                pedido_nuevo.iva = (float)(importe * 0.16);
+                pedido_nuevo.iva = (float)(pedido_nuevo.importe * 0.16);
                 
                 // SUMAMOS IVA Y IMPORTE
-                pedido_nuevo.total = (float)(importe + pedido_nuevo.iva);
+                pedido_nuevo.total = (float)(pedido_nuevo.importe  + pedido_nuevo.iva);
 
                 // 0 - PENDIENTE
                 // 1 - TERMINADO
@@ -465,7 +556,191 @@ namespace Proyecto_Final.servicios
         {
             throw new NotImplementedException();
         }
+        
 
+        public int actualizar()
+        {
+
+            bool has_pedidos = this.hayPedidos();
+
+            if( !has_pedidos )
+            {
+                
+                ConsoleHooks.printRule("[red]Sin pedidos[/]");
+
+                return ROUTER_REDIRECT;
+
+            }
+
+            this.listar();
+
+            int id = ConsoleHooks.askNumero("[red]Ingresa el id de la orden a actualizar:[/]");
+            
+            Pedido pedido = new Pedido();
+
+             AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+            {
+                pedido = obtenerPedidoPorID(id)!;
+            });
+
+            if( pedido == null )
+            {
+                
+                ConsoleHooks.printRule("[red]Pedido no valido[/]");
+
+                return ROUTER_REDIRECT;
+
+            }
+
+            string opcion = ConsoleHooks.askOpciones(OPCIONES_ACTUALIZAR_PEDIDO.ToList());
+            
+            switch( opcion )
+            {
+                case "1) Tipo pedido":
+                    
+                    var tipo_pedido = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("Selecciona el tipo de pedido:")
+                            .PageSize(3)
+                            .AddChoices(new[] {
+                                "1) Comer aqui", "2) Para llevar",
+                            }));
+                    
+                    pedido.tipo_pedido = tipo_pedido == "1) Comer aqui" ? 0 : 1;
+                    
+                break;
+                case "2) Mesa":
+                    int mesa = ConsoleHooks.askNumero("Ingresa el numero de mesa: ");
+                    pedido.mesa = mesa;
+                break;
+                case "3) Productos":
+                    
+                    List<string> producto_listado = new List<string>();
+                    
+                    AnsiConsole.Status().Start("Cargando productos...", ctx =>
+                    {
+                        producto_listado = SProducto.obtenerProductosListado();
+                    });
+                    
+                    Menu.showMainLogo();
+                    
+                    string producto = this.preguntarProductos(producto_listado , pedido);
+
+                    pedido.iva = (float)(pedido.importe * 0.16);
+                
+                    pedido.total = (float)(pedido.importe  + pedido.iva);
+
+                    pedido.producto = producto;
+
+                break;
+            }
+
+            Menu.showMainLogo();
+
+            ConsoleHooks.printRule("[bold red]El pedido se actualizara con los siguientes datos[/]");
+
+            this.renderPedido(pedido);
+
+            bool response = ConsoleHooks.handleConfirm("¿Deseas actualizar el pedido?");
+
+            if( !response ) return ROUTER_REDIRECT;
+
+            bool actualizado = false;
+            
+            AnsiConsole.Status().Start("Actualizando pedido...", ctx =>
+            {
+                actualizado = actualizarPedido(pedido);
+            });
+
+            if( actualizado )
+            {
+                ConsoleHooks.printRule("[bold red]Pedido actualizado correctamente[/]");
+                return ROUTER_REDIRECT;
+            }
+            
+            ConsoleHooks.printRule("[bold red]No se pudo actualizar el pedido[/]");
+
+            return ROUTER_REDIRECT;
+
+        }
+
+        private bool actualizarPedido( Pedido pedido )
+        {
+            try
+            {
+                
+                using(RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    dc.Pedidos.Update(pedido);
+                    dc.SaveChanges();
+                }
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void renderPedido( Pedido pedido , bool isPago = true )
+        {
+            
+            var table = new Table();
+            
+            table.Expand();
+
+            var table_pedidos = new Table()
+                .BorderColor(Color.Yellow1)
+                .Border(TableBorder.Rounded)
+                .Centered()
+                .Expand()
+                .AddColumn(new TableColumn("[bold yellow]Numero Pedido[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Tipo[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Status[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Mesa[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Producto[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Importe[/]"))
+                .AddColumn(new TableColumn("[bold yellow]IVA[/]"))
+                .AddColumn(new TableColumn("[bold yellow]Total[/]"));
+
+            // SI RECIBE LA BANDERA AGREGA UNA COLUMNA
+            if( isPago )
+            {
+                table_pedidos.AddColumn(new TableColumn("[bold yellow]Tipo de pago[/]"));
+            }
+
+            if( isPago )
+            {
+                table_pedidos.AddRow(
+                    new Markup($"[bold]{pedido.id}[/]"),
+                    new Markup($"[bold]{Utilidades.renderTipoPedido(pedido.tipo_pedido)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderStatusPedido(pedido.status)}[/]"),
+                    new Markup($"[bold]{pedido.mesa}[/]"),
+                    new Markup($"[bold]{pedido.producto}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.importe)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.iva)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.total)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderTipoCobro(pedido.tipo_cobro)}[/]")
+                );
+            }
+            else
+            {
+                table_pedidos.AddRow(
+                    new Markup($"[bold]{pedido.id}[/]"),
+                    new Markup($"[bold]{Utilidades.renderTipoPedido(pedido.tipo_pedido)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderStatusPedido(pedido.status)}[/]"),
+                    new Markup($"[bold]{pedido.mesa}[/]"),
+                    new Markup($"[bold]{pedido.producto}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.importe)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.iva)}[/]"),
+                    new Markup($"[bold]{Utilidades.renderDinero(pedido.total)}[/]")
+                );
+            }
+
+            AnsiConsole.Write(table_pedidos);
+
+        }
         // FUNCION QUE RENDERIZA UNA TABLA POR PEDIDOS
         public void renderTable( List<Pedido> pedidos_pendientes , bool isPago = true )
         {
@@ -541,6 +816,15 @@ namespace Proyecto_Final.servicios
                 pedidos_pendientes = this.obtenerPedidosPorStatus(0);
             });
 
+            if( pedidos_pendientes.Count == 0 )
+            {
+
+                ConsoleHooks.printRule("[bold red]Sin pedidos pendientes[/]");
+
+                return ROUTER_REDIRECT;
+
+            }
+
             ConsoleHooks.printRule("[red]Pedidos pendientes:[/]");
 
             this.renderTable(pedidos_pendientes , false);            
@@ -562,6 +846,30 @@ namespace Proyecto_Final.servicios
 
                return pedidos;
 
+            }
+
+        }
+        
+        private Pedido? obtenerPedidoPorID( int id )
+        {
+
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+
+                    Pedido pedido = dc.Pedidos.Where(pedido => pedido.id == id ).FirstOrDefault()!;
+
+                    return pedido;
+
+                }
+            }
+            catch
+            {
+                ConsoleHooks.printRule("[red]No se pudo obtener el pedido[]");
+
+                return null;
+                
             }
 
         }

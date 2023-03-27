@@ -17,9 +17,8 @@ namespace Proyecto_Final.servicios
                     .AddChoices(new[] {
                         "1) Listar productos",
                         "2) Agregar producto",
-                        "3) Actualizar producto",
-                        "4) Eliminar producto",
-                        "5) Salir",
+                        "3) Eliminar producto",
+                        "4) Salir",
                     }));
 
             int seleccion = this.checkMenu(opt);
@@ -37,12 +36,10 @@ namespace Proyecto_Final.servicios
                     return 0;
                 case "2) Agregar producto":
                     return 1;
-                case "3) Actualizar producto":
-                    return 2;
-                case "4) Eliminar producto":
+                case "3) Eliminar producto":
                     return 3;
-                case "5) Salir":
-                    return 4;
+                case "4) Salir":
+                    return -1;
             }
 
             return -1;
@@ -57,7 +54,7 @@ namespace Proyecto_Final.servicios
                     return this.mostrarProductos();
                 case 1:
                     return this.menuAgregarProducto();
-                case 2:
+                case 3:
                     return this.eliminar();
                 default:
                     return 0;
@@ -71,9 +68,12 @@ namespace Proyecto_Final.servicios
             
             var nombre_producto = AnsiConsole.Ask<string>("[green]Ingresa el nombre del producto:[/]");
             
+            float precio = AnsiConsole.Ask<float>("[green]Ingresa el precio del producto:[/]");
+            
             Producto producto = new Producto()
             {
                 nombre = nombre_producto,
+                precio = precio
             };
 
             Menu.showMainLogo();
@@ -200,50 +200,28 @@ namespace Proyecto_Final.servicios
 
                 table.AddColumn("[yellow bold]ID[/]");
                 table.AddColumn("[yellow bold]Nombre[/]");
+                table.AddColumn("[yellow bold]Precio[/]");
 
                 Menu.showMainLogo();
 
                 ConsoleHooks.printRule("[red]Productos[/]");
 
-                AnsiConsole.Live(table).AutoClear(false)
-                    .Start(ctx =>
-                    {
+                table.BorderColor(Color.Yellow1);
 
-                        table.Columns[0].Header("[yellow bold]ID[/]");
+                foreach (Producto producto in productos)
+                {
+                    table.AddRow(
+                        $"[white]{producto.id.ToString()}[/]",
+                        $"[white]{producto.nombre}[/]",
+                        $"[white]${producto.precio}[/]"
+                   );
+                }
 
-                        table.Columns[1].Header("[yellow bold]Nombre[/]");
-
-
-                        table.BorderColor(Color.Yellow1);
-
-                        foreach (Producto producto in productos)
-                        {
-                            table.AddRow(
-                                $"[white]{producto.id.ToString()}[/]",
-                                $"[white]{producto.nombre}[/]"
-                           );
-                        }
-
-                    });
-
+                AnsiConsole.Write(table);
+                  
                 return ROUTER_REDIRECT;
 
             }
-
-        }
-
-        protected int eleminar()
-        {
-
-            var rule = new Rule("[red]Selecciona los productos que vas a eliminar[/] \n").LeftJustified();
-
-            //AnsiConsole.Write(rule);
-
-            //List<Componente> componentes_seleccionados = new List<Componente>();
-
-            //componentes_seleccionados = SComponente.seleccionarComponentes();
-
-            return ROUTER_REDIRECT;
 
         }
 
@@ -260,7 +238,7 @@ namespace Proyecto_Final.servicios
         public int eliminar()
         {
 
-            this.listar();
+            this.mostrarProductos();
 
             int id = ConsoleHooks.askNumero("[red]Ingresa el id del producto a eliminar:[/]");
 
@@ -301,7 +279,7 @@ namespace Proyecto_Final.servicios
                 using (RestauranteDataContext dc = new RestauranteDataContext())
                 {
 
-                    Producto p = dc.Productos.Where( producto => producto.id == idProducto).FirstOrDefault();
+                    Producto p = dc.Productos.Where( producto => producto.id == idProducto).FirstOrDefault()!;
 
                     dc.Productos.Remove(p);
 

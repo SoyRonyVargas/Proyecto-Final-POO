@@ -24,7 +24,13 @@ class Program
 
             while( true )
             {
-                menu.mostrarMenu(null);
+                bool continuar = menu.mostrarMenu(null);
+                if( !continuar )
+                {
+                    Menu.showMainLogo();
+                    ConsoleHooks.printRule("Fin del programa");
+                    break;
+                }
             }
 
         }

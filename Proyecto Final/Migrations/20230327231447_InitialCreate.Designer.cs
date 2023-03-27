@@ -11,8 +11,8 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    [Migration("20230327163418_usuarios")]
-    partial class usuarios
+    [Migration("20230327231447_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,9 +68,44 @@ namespace ProyectoFinal.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<double>("precio")
+                        .HasColumnType("double");
+
                     b.HasKey("id");
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            nombre = "Hamburguesa con queso",
+                            precio = 99.989999999999995
+                        },
+                        new
+                        {
+                            id = 2,
+                            nombre = "Coca cola 600ml",
+                            precio = 19.989999999999998
+                        },
+                        new
+                        {
+                            id = 3,
+                            nombre = "Pepsi 600ml",
+                            precio = 15.99
+                        },
+                        new
+                        {
+                            id = 4,
+                            nombre = "Papas fritas medianas",
+                            precio = 49.990000000000002
+                        },
+                        new
+                        {
+                            id = 5,
+                            nombre = "Nuggets de pollo (6 piezas)",
+                            precio = 89.989999999999995
+                        });
                 });
 
             modelBuilder.Entity("Proyecto_Final.clases.Usuario", b =>
@@ -83,6 +118,7 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("correo")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("nombre")
@@ -94,6 +130,16 @@ namespace ProyectoFinal.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            apellidos = "Gomez",
+                            correo = "prueba@gmail.com",
+                            nombre = "Adamaris",
+                            password = "1234"
+                        });
                 });
 #pragma warning restore 612, 618
         }

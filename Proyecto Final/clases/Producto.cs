@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_Final.clases
 {
@@ -9,6 +7,7 @@ namespace Proyecto_Final.clases
         [Key]    
         public int id { get; set; }
 		public string nombre { get; set; }
+		public double precio { get; set; }
     }
 }
 

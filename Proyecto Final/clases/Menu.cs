@@ -1,7 +1,5 @@
 ﻿using Proyecto_Final.servicios;
-using System.Diagnostics;
 using Spectre.Console;
-// using Spectre.Console.ImageSharp;
 namespace Proyecto_Final.clases
 {
     public class Menu
@@ -44,7 +42,7 @@ namespace Proyecto_Final.clases
 
         }
 
-        public void mostrarMenu( int? valor = null )
+        public bool mostrarMenu( int? valor = null )
         {
             
             Console.Clear();
@@ -89,10 +87,7 @@ namespace Proyecto_Final.clases
 
             int response = this.handleSeleccion(opcion);
 
-            // Console.WriteLine("Valor");
-            // Console.WriteLine(valor);
-
-            if ( response != -1 && response != 0 )
+            if ( response != -1 && response != 0 && response != 1000 )
             {
                 
                 Console.WriteLine("Presiona cualquier tecla para continuar...");
@@ -110,6 +105,10 @@ namespace Proyecto_Final.clases
                 Console.ReadKey();
 
             }
+            
+            if( response == 1000 ) return false;
+
+            return true;
 
         }
 
@@ -131,7 +130,7 @@ namespace Proyecto_Final.clases
                 case "6) Usuarios":
                     return 5;
                 case "7) Salir":
-                    return -1;
+                    return 6;
             }
 
             return -1;
@@ -154,6 +153,8 @@ namespace Proyecto_Final.clases
                     return SProducto.mostrarMenu();
                 case 5:
                     return SUsuario.mostrarMenu();
+                case 6:
+                    return 1000;
                 default: return -1;
             }
         }

@@ -57,11 +57,52 @@ namespace Proyecto_Final.hooks
             
             var eleccion = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"[red]{msg}[/]?")
+                    .Title($"[red]{msg}[/]")
                     .PageSize(10)
                     .AddChoices(opciones));
 
             return eleccion;
+
+        }
+        
+        public static List<string> askMultiOpciones( List<string> opciones , string? msg = "Selecciona una opcion"  )
+        {
+            //arreglo de opciones
+            if( msg == null )
+            {
+                return AnsiConsole.Prompt(
+                new MultiSelectionPrompt<string>()
+                    .PageSize(10)
+                    .InstructionsText(
+                        "[grey](Muevete con las flechas del teclado)[/]"
+                    )
+                    .AddChoices(opciones));
+            }
+            
+            var eleccion = AnsiConsole.Prompt(
+                new MultiSelectionPrompt<string>()
+                    .Title($"[red]{msg}[/]")
+                    .PageSize(10)
+                    .InstructionsText(
+                        "[grey](Muevete con las flechas del teclado)[/]"
+                    )
+                    .AddChoices(opciones));
+
+            return eleccion;
+
+        }
+
+        public static bool handleConfirm( string msg = "" )
+        {
+            var seleccion = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title(msg)
+                    .PageSize(10)
+                    .AddChoices(new[] {
+                        "Confirmar", "Cancelar"
+                    }));
+
+            return seleccion == "Confirmar";
 
         }
 

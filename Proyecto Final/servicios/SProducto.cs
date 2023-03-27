@@ -57,6 +57,8 @@ namespace Proyecto_Final.servicios
                     return this.mostrarProductos();
                 case 1:
                     return this.menuAgregarProducto();
+                case 2:
+                    return this.eliminar();
                 default:
                     return 0;
             }
@@ -258,7 +260,9 @@ namespace Proyecto_Final.servicios
         public int eliminar()
         {
 
-            int id = ConsoleHooks.askNumero("que producto desea eliminar?");
+            this.listar();
+
+            int id = ConsoleHooks.askNumero("[red]Ingresa el id del producto a eliminar:[/]");
 
             bool eliminar = Menu.handleConfirm("¿Deseas eliminar el producto?");
 
@@ -269,7 +273,7 @@ namespace Proyecto_Final.servicios
 
                 AnsiConsole.Status().Start("eliminando producto...", ctx =>
                 {
-                    response = this.eliminarProducto(eliminar);
+                    response = this.eliminarProducto(id);
                 });
 
                 Menu.showMainLogo();
@@ -285,6 +289,9 @@ namespace Proyecto_Final.servicios
 
                 return ROUTER_REDIRECT;
             }
+            
+            return ROUTER_REDIRECT;
+
         }
 
         private bool eliminarProducto(int idProducto)

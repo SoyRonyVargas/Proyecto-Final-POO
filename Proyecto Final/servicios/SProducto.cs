@@ -269,7 +269,7 @@ namespace Proyecto_Final.servicios
 
                 AnsiConsole.Status().Start("eliminando producto...", ctx =>
                 {
-                    response = this.eliminarProducto(eliminar);
+                    response = this.eliminarProducto(id);
                 });
 
                 Menu.showMainLogo();
@@ -285,6 +285,7 @@ namespace Proyecto_Final.servicios
 
                 return ROUTER_REDIRECT;
             }
+            return ROUTER_REDIRECT;
         }
 
         private bool eliminarProducto(int idProducto)

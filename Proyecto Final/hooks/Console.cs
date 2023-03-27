@@ -10,6 +10,8 @@ namespace Proyecto_Final.hooks
             AnsiConsole.Write(rule);
         }
 
+
+
         public static int askNumero( string msg = "" , string error = "Ingresa un valor valido" )
         {
             return AnsiConsole.Prompt(
@@ -44,7 +46,7 @@ namespace Proyecto_Final.hooks
 
         public static string askOpciones( List<string> opciones , string? msg = "Selecciona una opcion"  )
         {
-
+            //arreglo de opciones
             if( msg == null )
             {
                 return AnsiConsole.Prompt(

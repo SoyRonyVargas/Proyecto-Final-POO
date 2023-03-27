@@ -257,8 +257,59 @@ namespace Proyecto_Final.servicios
 
         public int eliminar()
         {
-            throw new NotImplementedException();
+
+            int id = ConsoleHooks.askNumero("que producto desea eliminar?");
+
+            bool eliminar = Menu.handleConfirm("¿Deseas eliminar el producto?");
+
+            if (eliminar)
+            {
+
+                bool response = false;
+
+                AnsiConsole.Status().Start("eliminando producto...", ctx =>
+                {
+                    response = this.eliminarProducto(eliminar);
+                });
+
+                Menu.showMainLogo();
+
+                if (response)
+                {
+                    ConsoleHooks.printRule("[red]Producto eliminado correctamente[/]");
+                }
+                else
+                {
+                    ConsoleHooks.printRule("[red]No se pudo eliminar el producto[/]");
+                }
+
+                return ROUTER_REDIRECT;
+            }
         }
+
+        private bool eliminarProducto(int idProducto)
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+
+                    Producto p = dc.Productos.Where( producto => producto.id == idProducto).FirstOrDefault();
+
+                    dc.Productos.Remove(p);
+
+                    dc.SaveChanges();
+
+                    return true;
+
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
     
 }

@@ -224,6 +224,7 @@ namespace Proyecto_Final.servicios
 
                 pedido_nuevo.producto = producto[0];
 
+
                 // SELECCIONAMOS EL TIPO DE PEDIDO
 
                 string tipo_pedido = AnsiConsole.Prompt(

@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System;
 
 namespace Proyecto_Final.clases
 {
@@ -10,6 +8,7 @@ namespace Proyecto_Final.clases
 
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

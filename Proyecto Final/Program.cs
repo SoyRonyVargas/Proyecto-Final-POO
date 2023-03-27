@@ -1,14 +1,37 @@
 ﻿
+using Proyecto_Final.servicios;
 using Proyecto_Final.clases;
+using Proyecto_Final.hooks;
 
 class Program
 {
     static void Main(string[] args)
     {
+        
+        SLogin usuario = new SLogin();
         Menu menu = new Menu();
-        while( true )
+        
+        Menu.showMainLogo();
+
+        bool response = usuario.run();
+
+        if( response )
         {
-            menu.mostrarMenu(null);
+            
+            ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
+            
+            Thread.Sleep(1000);
+
+            while( true )
+            {
+                menu.mostrarMenu(null);
+            }
+
         }
+        else
+        {
+            ConsoleHooks.printRule("[red]Usuario invalido[/]");
+        }
+
     }
 }

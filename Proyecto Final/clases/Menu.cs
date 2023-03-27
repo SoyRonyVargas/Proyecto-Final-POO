@@ -7,6 +7,7 @@ namespace Proyecto_Final.clases
     public class Menu
     {
         private SProducto SProducto = new SProducto();
+        private SUsuario SUsuario = new SUsuario();
         private SPedido SPedido = new SPedido();
 
         public static void setCargando()
@@ -75,7 +76,8 @@ namespace Proyecto_Final.clases
                             "3) Cobrar pedido", 
                             "4) Ventas",
                             "5) Productos",
-                            "6) Salir",
+                            "6) Usuarios",
+                            "7) Salir",
                         }));
 
                opcion = this.checkMainMenu(opt);
@@ -90,13 +92,23 @@ namespace Proyecto_Final.clases
             // Console.WriteLine("Valor");
             // Console.WriteLine(valor);
 
-            Console.WriteLine("Presiona cualquier tecla para continuar...");
-            
-            Console.ReadKey();
-
-            if ( response != -1 )
+            if ( response != -1 && response != 0 )
             {
+                
+                Console.WriteLine("Presiona cualquier tecla para continuar...");
+            
+                Console.ReadKey();
+
                 this.mostrarMenu(response);
+
+            }
+            if( response == -1 )
+            {
+                
+                Console.WriteLine("Presiona cualquier tecla para continuar...");
+            
+                Console.ReadKey();
+
             }
 
         }
@@ -116,7 +128,9 @@ namespace Proyecto_Final.clases
                     return 3;
                 case "5) Productos":
                     return 4;
-                case "6) Salir":
+                case "6) Usuarios":
+                    return 5;
+                case "7) Salir":
                     return -1;
             }
 
@@ -128,6 +142,8 @@ namespace Proyecto_Final.clases
         {
             switch(opcion)
             {
+                case 0:
+                    return SPedido.mostrarMenuPlatillos();
                 case 1:
                     return SPedido.mostrarMenu();
                 case 2:
@@ -136,6 +152,8 @@ namespace Proyecto_Final.clases
                     return SPedido.listarVentas();
                 case 4:
                     return SProducto.mostrarMenu();
+                case 5:
+                    return SUsuario.mostrarMenu();
                 default: return -1;
             }
         }

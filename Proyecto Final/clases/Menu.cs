@@ -16,9 +16,9 @@ namespace Proyecto_Final.clases
                 Thread.Sleep(500);
             });
         }
-        public static void showMainLogo( bool clear = true )
+        public static void showMainLogo(bool clear = true)
         {
-            if( clear )
+            if (clear)
             {
                 Console.Clear();
             }
@@ -27,9 +27,9 @@ namespace Proyecto_Final.clases
                 new FigletText("La Delicia")
                .LeftJustified()
                .Color(Color.Red));
-       }
-        
-        public static bool handleConfirm( string msg = "" )
+        }
+
+        public static bool handleConfirm(string msg = "")
         {
             var seleccion = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -43,9 +43,9 @@ namespace Proyecto_Final.clases
 
         }
 
-        public void mostrarMenu( int? valor = null )
+        public void mostrarMenu(int? valor = null)
         {
-            
+
             Console.Clear();
 
             Menu.showMainLogo();
@@ -62,23 +62,23 @@ namespace Proyecto_Final.clases
 
             int opcion = 0;
 
-            if( valor == null || valor == 0 )
+            if (valor == null || valor == 0)
             {
-                
+
                 var opt = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Selecciona una opcion")
                         .PageSize(10)
                         .AddChoices(new[] {
                             "1) Menu",
-                            "2) Pedidos", 
-                            "3) Cobrar pedido", 
+                            "2) Pedidos",
+                            "3) Cobrar pedido",
                             "4) Ventas",
                             "5) Productos",
                             "6) Salir",
                         }));
 
-               opcion = this.checkMainMenu(opt);
+                opcion = this.checkMainMenu(opt);
             }
             else
             {
@@ -91,20 +91,20 @@ namespace Proyecto_Final.clases
             // Console.WriteLine(valor);
 
             Console.WriteLine("Presiona cualquier tecla para continuar...");
-            
+
             Console.ReadKey();
 
-            if ( response != -1 )
+            if (response != -1)
             {
                 this.mostrarMenu(response);
             }
 
         }
 
-        private int checkMainMenu( string opcion )
+        private int checkMainMenu(string opcion)
         {
-            
-            switch( opcion )
+
+            switch (opcion)
             {
                 case "1) Menu":
                     return 0;
@@ -124,9 +124,9 @@ namespace Proyecto_Final.clases
 
         }
 
-        private int handleSeleccion(int opcion )
+        private int handleSeleccion(int opcion)
         {
-            switch(opcion)
+            switch (opcion)
             {
                 case 1:
                     return SPedido.mostrarMenu();
@@ -136,9 +136,15 @@ namespace Proyecto_Final.clases
                     return SPedido.listarVentas();
                 case 4:
                     return SProducto.mostrarMenu();
+                case 5:
+                    return GenerarTkt.Ticket();
                 default: return -1;
             }
         }
+        
+      
+
     }
+ 
     
 }

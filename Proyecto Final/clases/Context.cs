@@ -16,9 +16,9 @@ namespace Proyecto_Final.clases
             {
 
                 // SI OCUPAS SQLSERVER USA ESTA
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-KPGRKDT;Database=la_delicia ;Trusted_Connection=SSPI;MultipleActiveResultSets=true;Trust Server Certificate=true");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=la_delicia ;Trusted_Connection=SSPI;MultipleActiveResultSets=true;Trust Server Certificate=true");
                 
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                //optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 
                 // SI OCUPAS MYSQL USA ESTA
               

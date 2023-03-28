@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_Final.clases;
@@ -11,7 +12,7 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    [Migration("20230327231447_InitialCreate")]
+    [Migration("20230328213319_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +21,9 @@ namespace ProyectoFinal.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Proyecto_Final.clases.Pedido", b =>
                 {
@@ -28,18 +31,20 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
                     b.Property<float>("importe")
-                        .HasColumnType("float");
+                        .HasColumnType("real");
 
                     b.Property<float>("iva")
-                        .HasColumnType("float");
+                        .HasColumnType("real");
 
                     b.Property<int>("mesa")
                         .HasColumnType("int");
 
                     b.Property<string>("producto")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -51,7 +56,7 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("total")
-                        .HasColumnType("float");
+                        .HasColumnType("real");
 
                     b.HasKey("id");
 
@@ -64,12 +69,14 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("precio")
-                        .HasColumnType("double");
+                        .HasColumnType("float");
 
                     b.HasKey("id");
 
@@ -114,18 +121,20 @@ namespace ProyectoFinal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
                     b.Property<string>("apellidos")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("correo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 

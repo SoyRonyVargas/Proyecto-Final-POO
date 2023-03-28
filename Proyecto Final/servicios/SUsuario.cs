@@ -140,6 +140,7 @@ namespace Proyecto_Final.servicios
             }
             catch
             {
+                System.Console.WriteLine("Error bd");
                 return false;
             }
         }

@@ -10,7 +10,11 @@ namespace Proyecto_Final.hooks
             AnsiConsole.Write(rule);
         }
 
-
+        public static void wait()
+        {
+            Console.WriteLine("Presiona enter para continuar...");
+            Console.ReadKey();
+        }
 
         public static int askNumero( string msg = "" , string error = "Ingresa un valor valido" )
         {

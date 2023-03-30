@@ -132,6 +132,8 @@ namespace Proyecto_Final.servicios
                 {
                     Usuario user = dc.Usuarios.Where( usuario => usuario.correo == correo ).FirstOrDefault()!;
 
+                    if (user == null) return false;
+                    
                     if( user.password == password ) return true;
 
                     return false;

@@ -161,7 +161,7 @@ namespace Proyecto_Final.servicios
 
                 ConsoleHooks.printRule("[red]Sin ventas[/]");
 
-                return ROUTER_REDIRECT;
+                return -1;
 
             }
 
@@ -881,9 +881,22 @@ namespace Proyecto_Final.servicios
             {
                 using (RestauranteDataContext dc = new RestauranteDataContext())
                 {
-                    Pedido pedido = dc.Pedidos.OrderBy(x=>x.id).LastOrDefault()!;
+                    try
+                    {
+                        
+                        Pedido pedido = dc.Pedidos.OrderBy(x=>x.id).LastOrDefault()!;
 
-                    return pedido.id + 1;
+                        if (pedido == null) return 1;
+
+                        int id = pedido.id;
+
+                        return (id) + 1;
+
+                    }
+                    catch
+                    {
+                        return 1;
+                    }
                 }
             }
             catch

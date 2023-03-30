@@ -1,5 +1,4 @@
-﻿
-using Proyecto_Final.servicios;
+﻿using Proyecto_Final.servicios;
 using Proyecto_Final.clases;
 using Proyecto_Final.hooks;
 
@@ -11,32 +10,45 @@ class Program
         SLogin usuario = new SLogin();
         Menu menu = new Menu();
         
-        Menu.showMainLogo();
+        bool auth = true;
 
-        bool response = usuario.run();
-
-        if( response )
+        while( auth )
         {
             
-            ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
-            
-            Thread.Sleep(1000);
+            Menu.showMainLogo();
 
-            while( true )
+            ConsoleHooks.printRule("[red bold]Iniciar Sesión[/]");
+
+            bool response = usuario.run();
+
+            if( response )
             {
-                bool continuar = menu.mostrarMenu(null);
-                if( !continuar )
-                {
-                    Menu.showMainLogo();
-                    ConsoleHooks.printRule("Fin del programa");
-                    break;
-                }
-            }
 
-        }
-        else
-        {
-            ConsoleHooks.printRule("[red]Usuario invalido[/]");
+                Menu.showMainLogo();
+
+                ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
+                
+                Thread.Sleep(700);
+
+                while( true )
+                {
+                    bool continuar = menu.mostrarMenu(null);
+                    
+                    if( !continuar )
+                    {
+                        Menu.showMainLogo();
+                        ConsoleHooks.printRule("Fin del programa");
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                Menu.showMainLogo();
+                ConsoleHooks.printRule("[red]Usuario invalido[/]");
+                ConsoleHooks.wait();
+            }
         }
 
     }

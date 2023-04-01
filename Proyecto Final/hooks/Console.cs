@@ -52,8 +52,14 @@ namespace Proyecto_Final.hooks
                 
                 if( lastKey.Key == ConsoleKey.Backspace )
                 {
-                    Console.Write(" \b");
-                    result = result.Remove(result.Length - 1 , 1 );
+                    // Console.Write(" \b");
+                    Console.Write("\x1B[1D"); // Move the cursor one unit to the left
+                    Console.Write("\x1B[1P");
+                    try
+                    {
+                        result = result.Remove(result.Length - 1 , 1 );
+                    }
+                    catch{}
                 }
 
             }
@@ -236,15 +242,44 @@ namespace Proyecto_Final.hooks
                         }));
         }
 
+        public static List<string> addSalirOpciones( List<string> opciones )
+        {
+
+            if( !opciones.Contains("Salir") )
+            {
+                opciones.Add("Salir");
+            }
+
+            return opciones;
+
+        }
+
+        public static string validarSeleccion( string opcion )
+        {
+            if( opcion == "Salir" )
+            {
+                throw new Exception();
+            }
+
+            return opcion;
+
+        }
+
         public static string askOpciones( List<string> opciones , string? msg = "Selecciona una opcion"  )
         {
+
+            opciones = addSalirOpciones(opciones);
+
             //arreglo de opciones
             if( msg == null )
             {
-                return AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .PageSize(10)
-                    .AddChoices(opciones));
+                string result = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .PageSize(10)
+                        .AddChoices(opciones));
+                
+                return validarSeleccion(result);
+
             }
             
             var eleccion = AnsiConsole.Prompt(
@@ -253,7 +288,7 @@ namespace Proyecto_Final.hooks
                     .PageSize(10)
                     .AddChoices(opciones));
 
-            return eleccion;
+            return validarSeleccion(eleccion);
 
         }
         

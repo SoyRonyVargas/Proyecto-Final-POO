@@ -198,7 +198,12 @@ namespace Proyecto_Final.servicios
             }
 
             // PEDIMOS AL USUARIO QUE NOS INGRESE EL ID DEL PEDIDO
-            int orden = ConsoleHooks.askNumero("Selecciona la orden que quieres cobrar: ");
+            int orden = ConsoleHooks.askInt(
+                "Selecciona la orden que quieres cobrar: " ,
+                "Ingresa una orden valida",
+                true,
+                false
+            );
 
             // SI NO EXISTE
             if( !pedidos_ids.Contains(orden) )
@@ -212,7 +217,10 @@ namespace Proyecto_Final.servicios
 
             // MOSTRAMOS QUE ELIGA UNA OPCION DE PAGO
             // TARJETA O EFECTIVO
-            string cobro = ConsoleHooks.askOpciones(this.OPCIONES_COBRO , "[red]Selecciona el tipo de pago[/]");
+
+            ConsoleHooks.printRule("[red]Selecciona el tipo de pago[/]");
+
+            string cobro = ConsoleHooks.askOpciones(this.OPCIONES_COBRO , null);
 
             // LO TRANSFORMAMOS A ENTERO
             int tipo_cobro = Utilidades.getTipoCobro(cobro);

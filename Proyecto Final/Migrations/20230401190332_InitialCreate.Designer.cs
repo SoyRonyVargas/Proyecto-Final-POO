@@ -12,7 +12,7 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    [Migration("20230328213319_InitialCreate")]
+    [Migration("20230401190332_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,6 +32,9 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("importe")
                         .HasColumnType("real");
@@ -71,6 +74,15 @@ namespace ProyectoFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("existencias_iniciales")
+                        .HasColumnType("int");
+
+                    b.Property<int>("existencias_restantes")
+                        .HasColumnType("int");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,30 +98,45 @@ namespace ProyectoFinal.Migrations
                         new
                         {
                             id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            existenciasiniciales = 5,
+                            existenciasrestantes = 5,
                             nombre = "Hamburguesa con queso",
                             precio = 99.989999999999995
                         },
                         new
                         {
                             id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            existenciasiniciales = 5,
+                            existenciasrestantes = 5,
                             nombre = "Coca cola 600ml",
                             precio = 19.989999999999998
                         },
                         new
                         {
                             id = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            existenciasiniciales = 5,
+                            existenciasrestantes = 5,
                             nombre = "Pepsi 600ml",
                             precio = 15.99
                         },
                         new
                         {
                             id = 4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            existenciasiniciales = 5,
+                            existenciasrestantes = 5,
                             nombre = "Papas fritas medianas",
                             precio = 49.990000000000002
                         },
                         new
                         {
                             id = 5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            existenciasiniciales = 5,
+                            existenciasrestantes = 5,
                             nombre = "Nuggets de pollo (6 piezas)",
                             precio = 89.989999999999995
                         });
@@ -122,6 +149,9 @@ namespace ProyectoFinal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("apellidos")
                         .HasColumnType("nvarchar(max)");
@@ -144,6 +174,7 @@ namespace ProyectoFinal.Migrations
                         new
                         {
                             id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             apellidos = "Gomez",
                             correo = "prueba@gmail.com",
                             nombre = "Adamaris",

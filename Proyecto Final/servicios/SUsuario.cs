@@ -61,22 +61,32 @@ namespace Proyecto_Final.servicios
         public int crear()
         {
             
-            string nombre = AnsiConsole.Ask<string>("[green]Ingresa el nombre:[/]");
+            string nombre = ConsoleHooks.askString(
+                "[red]Ingresa el nombre del usuario:[/]"
+            );
             
-            string apellidos = AnsiConsole.Ask<string>("[green]Ingresa el los apellidos: [/]");
+            string apellidos = ConsoleHooks.askString(
+                "[red]Ingresa los apellidos del usuario:[/]"
+            );
             
-            string correo = AnsiConsole.Ask<string>("[green]Ingresa el correo electronico: [/]");
-
-            string pass_1 = AnsiConsole.Ask<string>("[green]Ingresa la contraseña: [/]");
+            string correo = ConsoleHooks.askString(
+                "[red]Ingresa el correo del usuario:[/]"
+            );
             
-            string pass_2 = AnsiConsole.Ask<string>("[green]Ingresa nuevamente la contraseña: [/]");
-
+            string pass_1 = ConsoleHooks.askString(
+                "[red]Ingresa la contraseña: [/]"
+            );
+            
+            string pass_2 = ConsoleHooks.askString(
+                "[red]Ingresa nuevamente la contraseña: [/]"
+            );
+            
             if( pass_1 != pass_2 )
             {
                 
                 ConsoleHooks.printRule("[red]Las contraseñas no coinciden[/]");
                 
-                return 1;
+                return ROUTER_REDIRECT;
 
             }
 

@@ -61,14 +61,14 @@ namespace Proyecto_Final.servicios
             }
         }
 
-        
-
         public int menuAgregarProducto()
         {
             
-            var nombre_producto = AnsiConsole.Ask<string>("[green]Ingresa el nombre del producto:[/]");
-            
-            float precio = AnsiConsole.Ask<float>("[green]Ingresa el precio del producto:[/]");
+            Menu.showMainLogo();
+
+            string nombre_producto = ConsoleHooks.askString("[red]Ingresa el nombre del producto:[/]");
+
+            double precio = ConsoleHooks.askDouble("[red]Ingresa el precio del producto:[/]");
             
             Producto producto = new Producto()
             {
@@ -77,6 +77,8 @@ namespace Proyecto_Final.servicios
             };
 
             Menu.showMainLogo();
+
+            this.mostrarProducto(producto);
 
             bool opcion = Menu.handleConfirm("¿Deseas guardar el producto?");
 
@@ -201,6 +203,7 @@ namespace Proyecto_Final.servicios
                 table.AddColumn("[yellow bold]ID[/]");
                 table.AddColumn("[yellow bold]Nombre[/]");
                 table.AddColumn("[yellow bold]Precio[/]");
+                table.AddColumn("[yellow bold]Fecha de creación[/]");
 
                 Menu.showMainLogo();
 
@@ -213,7 +216,8 @@ namespace Proyecto_Final.servicios
                     table.AddRow(
                         $"[white]{producto.id.ToString()}[/]",
                         $"[white]{producto.nombre}[/]",
-                        $"[white]${producto.precio}[/]"
+                        $"[white]${producto.precio}[/]",
+                        $"[white]{producto.CreatedDate.ToString()}[/]"
                    );
                 }
 
@@ -222,6 +226,54 @@ namespace Proyecto_Final.servicios
                 return ROUTER_REDIRECT;
 
             }
+
+        }
+
+        private void mostrarProducto( Producto producto )
+        {
+
+            Table table = new Table().Expand().BorderColor(Color.Grey);
+
+            table.Border(TableBorder.Rounded);
+
+            if( producto.id != 0 )
+            {
+                table.AddColumn("[yellow bold]ID[/]");
+            }
+            
+            table.AddColumn("[yellow bold]Nombre[/]");
+            
+            table.AddColumn("[yellow bold]Precio[/]");
+            
+            if( producto.id != 0 )
+            {
+                table.AddColumn("[yellow bold]Fecha de creación[/]");
+            }
+
+            Menu.showMainLogo();
+
+            ConsoleHooks.printRule("[red]Producto[/]");
+
+            table.BorderColor(Color.Yellow1);
+
+            if( producto.id != 0 )
+            {
+                table.AddRow(
+                    $"[white]{producto.id.ToString()}[/]",
+                    $"[white]{producto.nombre}[/]",
+                    $"[white]${producto.precio}[/]",
+                    $"[white]{producto.CreatedDate.ToString()}[/]"
+                );
+            }
+            else
+            {
+                table.AddRow(
+                    $"[white]{producto.nombre}[/]",
+                    $"[white]${producto.precio}[/]"
+                );
+            }
+
+            AnsiConsole.Write(table);
 
         }
 
@@ -235,14 +287,59 @@ namespace Proyecto_Final.servicios
             throw new NotImplementedException();
         }
 
+        public bool existeProductoPorId( int id )
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+
+                    Producto p = dc.Productos.Where( producto => producto.id == id).FirstOrDefault()!;
+
+                    if( p != null ) return true;
+
+                    return false;
+
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public int eliminar()
         {
 
             this.mostrarProductos();
 
-            int id = ConsoleHooks.askNumero("[red]Ingresa el id del producto a eliminar:[/]");
+            int id = ConsoleHooks.askInt(
+                "[red]Ingresa el id del producto a eliminar:[/]" , 
+                "Ingresa un id valido",
+                true,
+                false
+            );
 
-            bool eliminar = Menu.handleConfirm("¿Deseas eliminar el producto?");
+            if( !existeProductoPorId(id) )
+            {
+
+                ConsoleHooks.printRule("[red]El producto no se encuentra en la lista[/]");
+
+                return ROUTER_REDIRECT;
+
+            }
+
+            Producto producto = new Producto();
+
+            AnsiConsole.Status().Start("cargandp producto...", ctx =>
+            {
+                producto = obtenerProducto(id);
+            });
+
+            Menu.showMainLogo();
+
+            this.mostrarProducto(producto);
+
+            bool eliminar = Menu.handleConfirm("¿Deseas eliminar el producto?" , false);
 
             if (eliminar)
             {

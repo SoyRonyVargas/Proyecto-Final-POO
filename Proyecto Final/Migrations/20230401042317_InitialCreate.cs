@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -25,7 +26,8 @@ namespace ProyectoFinal.Migrations
                     importe = table.Column<float>(type: "real", nullable: false),
                     iva = table.Column<float>(type: "real", nullable: false),
                     total = table.Column<float>(type: "real", nullable: false),
-                    tipocobro = table.Column<int>(name: "tipo_cobro", type: "int", nullable: true)
+                    tipocobro = table.Column<int>(name: "tipo_cobro", type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +41,8 @@ namespace ProyectoFinal.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    precio = table.Column<double>(type: "float", nullable: false)
+                    precio = table.Column<double>(type: "float", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +58,8 @@ namespace ProyectoFinal.Migrations
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     apellidos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,20 +68,20 @@ namespace ProyectoFinal.Migrations
 
             migrationBuilder.InsertData(
                 table: "Productos",
-                columns: new[] { "id", "nombre", "precio" },
+                columns: new[] { "id", "CreatedDate", "nombre", "precio" },
                 values: new object[,]
                 {
-                    { 1, "Hamburguesa con queso", 99.989999999999995 },
-                    { 2, "Coca cola 600ml", 19.989999999999998 },
-                    { 3, "Pepsi 600ml", 15.99 },
-                    { 4, "Papas fritas medianas", 49.990000000000002 },
-                    { 5, "Nuggets de pollo (6 piezas)", 89.989999999999995 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hamburguesa con queso", 99.989999999999995 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Coca cola 600ml", 19.989999999999998 },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pepsi 600ml", 15.99 },
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Papas fritas medianas", 49.990000000000002 },
+                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nuggets de pollo (6 piezas)", 89.989999999999995 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
-                columns: new[] { "id", "apellidos", "correo", "nombre", "password" },
-                values: new object[] { 1, "Gomez", "prueba@gmail.com", "Adamaris", "1234" });
+                columns: new[] { "id", "CreatedDate", "apellidos", "correo", "nombre", "password" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gomez", "prueba@gmail.com", "Adamaris", "1234" });
         }
 
         /// <inheritdoc />

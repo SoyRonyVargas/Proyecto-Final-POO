@@ -7,7 +7,7 @@ namespace Proyecto_Final.servicios
     // LA CLASE TIENE QUE TENER LOS METODOS DE LA INTERFAZ
     public class SPedido : IService
     {
-        
+
         // CONSTANE PARA REDIRIGIR AL MISMO MENU
         private const int ROUTER_REDIRECT = 1;
         

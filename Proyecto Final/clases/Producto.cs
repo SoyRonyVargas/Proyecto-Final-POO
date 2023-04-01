@@ -2,7 +2,7 @@
 
 namespace Proyecto_Final.clases
 {
-    public class Producto
+    public class Producto : BaseEntity
 	{
         [Key]    
         public int id { get; set; }

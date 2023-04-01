@@ -13,23 +13,30 @@ class Program
         
         Menu.showMainLogo();
 
-        bool response = usuario.run();
+        // bool response = usuario.run();
 
-        if( response )
+        if( true )
         {
-            
+
             ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
             
             Thread.Sleep(1000);
 
             while( true )
             {
-                bool continuar = menu.mostrarMenu(null);
-                if( !continuar )
+                try
                 {
-                    Menu.showMainLogo();
-                    ConsoleHooks.printRule("Fin del programa");
-                    break;
+                    bool continuar = menu.mostrarMenu(null);
+                    if( !continuar )
+                    {
+                        Menu.showMainLogo();
+                        ConsoleHooks.printRule("Fin del programa");
+                        break;
+                    }
+                }
+                catch
+                {
+                    
                 }
             }
 

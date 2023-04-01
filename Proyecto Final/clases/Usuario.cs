@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_Final.clases
 {
-    public class Usuario
+    public class Usuario : BaseEntity
 	{
         [Key]    
         public int id { get; set; }

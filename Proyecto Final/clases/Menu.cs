@@ -28,8 +28,14 @@ namespace Proyecto_Final.clases
                .Color(Color.Red));
        }
         
-        public static bool handleConfirm( string msg = "" )
+        public static bool handleConfirm( string msg = "" , bool clear = false )
         {
+
+            if( clear )
+            {
+                Menu.showMainLogo();
+            }
+            
             var seleccion = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title(msg)

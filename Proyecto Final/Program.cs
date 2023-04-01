@@ -17,12 +17,30 @@ class Program
             
             Menu.showMainLogo();
 
+            ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
+            
+            Thread.Sleep(1000);
+
             ConsoleHooks.printRule("[red bold]Iniciar Sesión[/]");
 
             bool response = usuario.run();
 
             if( response )
             {
+                try
+                {
+                    bool continuar = menu.mostrarMenu(null);
+                    if( !continuar )
+                    {
+                        Menu.showMainLogo();
+                        ConsoleHooks.printRule("Fin del programa");
+                        break;
+                    }
+                }
+                catch
+                {
+                    
+                }
 
                 Menu.showMainLogo();
 
@@ -47,7 +65,6 @@ class Program
             {
                 Menu.showMainLogo();
                 ConsoleHooks.printRule("[red]Usuario invalido[/]");
-                ConsoleHooks.wait();
             }
         }
 

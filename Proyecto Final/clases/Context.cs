@@ -22,7 +22,6 @@ namespace Proyecto_Final.clases
                 
                 // SI OCUPAS MYSQL USA ESTA
               
-
             }
             catch
             {
@@ -47,7 +46,9 @@ namespace Proyecto_Final.clases
                 {
                     id = 1,
                     nombre = "Hamburguesa con queso",
-                    precio = 99.99
+                    precio = 99.99,
+                    existencias_iniciales = 5,
+                    existencias_restantes = 5
                 }
             );
             
@@ -56,7 +57,9 @@ namespace Proyecto_Final.clases
                 {
                     id = 2,
                     nombre = "Coca cola 600ml",
-                    precio = 19.99
+                    precio = 19.99,
+                    existencias_iniciales = 5,
+                    existencias_restantes = 5
                 }
             );
             
@@ -65,7 +68,9 @@ namespace Proyecto_Final.clases
                 {
                     id = 3,
                     nombre = "Pepsi 600ml",
-                    precio = 15.99
+                    precio = 15.99,
+                    existencias_iniciales = 5,
+                    existencias_restantes = 5
                 }
             );
             
@@ -74,7 +79,9 @@ namespace Proyecto_Final.clases
                 {
                     id = 4,
                     nombre = "Papas fritas medianas",
-                    precio = 49.99
+                    precio = 49.99,
+                    existencias_iniciales = 5,
+                    existencias_restantes = 5
                 }
             );
             
@@ -83,7 +90,9 @@ namespace Proyecto_Final.clases
                 {
                     id = 5,
                     nombre = "Nuggets de pollo (6 piezas)",
-                    precio = 89.99
+                    precio = 89.99,
+                    existencias_iniciales = 5,
+                    existencias_restantes = 5
                 }
             );
 

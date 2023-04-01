@@ -12,7 +12,7 @@ using Proyecto_Final.clases;
 namespace ProyectoFinal.Migrations
 {
     [DbContext(typeof(RestauranteDataContext))]
-    [Migration("20230401190332_InitialCreate")]
+    [Migration("20230401202830_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

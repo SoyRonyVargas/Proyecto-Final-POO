@@ -13,9 +13,9 @@ class Program
         
         Menu.showMainLogo();
 
-        // bool response = usuario.run();
+        bool response = usuario.run();
 
-        if( true )
+        if( response )
         {
 
             ConsoleHooks.printRule("[red]Autenticacion correcta[/]");

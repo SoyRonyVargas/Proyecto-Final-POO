@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Proyecto_Final.clases;
+﻿using Proyecto_Final.clases;
 using Spectre.Console;
 namespace Proyecto_Final.hooks
 {
@@ -53,7 +52,7 @@ namespace Proyecto_Final.hooks
                 if( lastKey.Key == ConsoleKey.Backspace )
                 {
                     // Console.Write(" \b");
-                    Console.Write("\x1B[1D"); // Move the cursor one unit to the left
+                    // Console.Write("\x1B[1D"); // Move the cursor one unit to the left
                     Console.Write("\x1B[1P");
                     try
                     {
@@ -106,7 +105,14 @@ namespace Proyecto_Final.hooks
                 if( lastKey.Key == ConsoleKey.Backspace )
                 {
                     Console.Write(" \b");
-                    numbersEntered = numbersEntered.Remove(numbersEntered.Length - 1 , 1 );
+                    try
+                    {
+                        numbersEntered = numbersEntered.Remove(numbersEntered.Length - 1 , 1 );
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
 
             }
@@ -210,38 +216,6 @@ namespace Proyecto_Final.hooks
 
         }
 
-        public static int askNumero( string msg = "" , string error = "Ingresa un valor valido" )
-        {
-            return AnsiConsole.Prompt(
-                        new TextPrompt<int>(msg)
-                            .PromptStyle("red")
-                            .ValidationErrorMessage($"[red]{error}[/]")
-                            .Validate(age =>
-                            {
-                            return age switch
-                                {
-                                    <= 0 => ValidationResult.Error($"[red]{error}[/]"),
-                                    _ => ValidationResult.Success(),
-                                };
-                        }));
-        }
-        
-        public static float askDecimal( string msg = "" , string error = "Ingresa un valor valido" )
-        {
-            return AnsiConsole.Prompt(
-                        new TextPrompt<float>(msg)
-                            .PromptStyle("red")
-                            .ValidationErrorMessage($"[red]{error}[/]")
-                            .Validate(age =>
-                            {
-                            return age switch
-                                {
-                                    <= 0 => ValidationResult.Error($"[red]{error}[/]"),
-                                    _ => ValidationResult.Success(),
-                                };
-                        }));
-        }
-
         public static List<string> addSalirOpciones( List<string> opciones )
         {
 
@@ -294,15 +268,16 @@ namespace Proyecto_Final.hooks
         
         public static List<string> askMultiOpciones( List<string> opciones , string? msg = "Selecciona una opcion"  )
         {
+
+            string instrucciones = "[grey](Muevete con las flechas del teclado)[/] \n[grey](Presiona ESPACIO para seleccionar)[/] \n[grey](Presiona ENTER para terminar)[/]";
+
             //arreglo de opciones
             if( msg == null )
             {
                 return AnsiConsole.Prompt(
                 new MultiSelectionPrompt<string>()
                     .PageSize(10)
-                    .InstructionsText(
-                        "[grey](Muevete con las flechas del teclado)[/]"
-                    )
+                    .InstructionsText(instrucciones)
                     .AddChoices(opciones));
             }
             
@@ -310,9 +285,7 @@ namespace Proyecto_Final.hooks
                 new MultiSelectionPrompt<string>()
                     .Title($"[red]{msg}[/]")
                     .PageSize(10)
-                    .InstructionsText(
-                        "[grey](Muevete con las flechas del teclado)[/]"
-                    )
+                    .InstructionsText(instrucciones)
                     .AddChoices(opciones));
 
             return eleccion;

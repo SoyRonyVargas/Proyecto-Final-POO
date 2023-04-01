@@ -31,6 +31,10 @@ namespace Proyecto_Final.servicios
             "Efectivo",
             "Tarjeta",
         };
+        private List<string> OPCIONES_PEDIDO = new List<string>() {
+            "1) Comer aqui", 
+            "2) Para llevar"
+        };
 
         // FUNCION DE LA INTERFAZ DE MOSTRAR MENU
         public int mostrarMenu()
@@ -199,8 +203,8 @@ namespace Proyecto_Final.servicios
 
             // PEDIMOS AL USUARIO QUE NOS INGRESE EL ID DEL PEDIDO
             int orden = ConsoleHooks.askInt(
-                "Selecciona la orden que quieres cobrar: " ,
-                "Ingresa una orden valida",
+                "Selecciona el pedido que quieres cobrar: " ,
+                "Ingresa un pedido valido",
                 true,
                 false
             );
@@ -208,9 +212,13 @@ namespace Proyecto_Final.servicios
             // SI NO EXISTE
             if( !pedidos_ids.Contains(orden) )
             {
+                
                 Menu.showMainLogo();
-                ConsoleHooks.printRule("Orden no valida");
+                
+                ConsoleHooks.printRule("[red]Pedido no valido[/]");
+
                 return -1;
+                
             }
 
             // SI EXISTE EL PEDIDO...
@@ -234,14 +242,18 @@ namespace Proyecto_Final.servicios
             // SI SE ACTUALIZO BIEN TERMINO
             if( response && response_tipo_cobro )
             {
+                
                 Menu.showMainLogo();
-                ConsoleHooks.printRule("Orden cobrada");
+                
+                ConsoleHooks.printRule("[red]Pedido cobrado[/]");
+                
                 return ROUTER_REDIRECT;
+
             }
 
             Menu.showMainLogo();
             
-            ConsoleHooks.printRule("No se pudo cobrar la orden");
+            ConsoleHooks.printRule("No se pudo cobrar el pedido");
 
             return ROUTER_REDIRECT;
 
@@ -310,7 +322,9 @@ namespace Proyecto_Final.servicios
             }
 
         }
-        
+
+
+        // OBTENEMOS EL PRODUCTO POR SU NOMBRE Y DEVOLVEMOS EL PRECIO
         private double obtenerPrecioProducto( string nombre_producto )
         {
             try
@@ -325,10 +339,66 @@ namespace Proyecto_Final.servicios
                 return 0;
             }
         }
-        private string preguntarProductos( List<string> producto_listado , Pedido? pedido = null )
+        
+        private int obtenerExistenciasDisponiblesProducto( string idProducto )
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    int existencias = dc.Productos.Where( producto => producto.nombre == idProducto ).FirstOrDefault()!.existencias_restantes;
+
+                    return existencias;
+                    
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        
+        private bool descontarExistencias( List<Descontar> existencias_descontar )
+        {
+            try
+            {
+                using (RestauranteDataContext dc = new RestauranteDataContext())
+                {
+                    
+                    foreach( Descontar descontar in existencias_descontar )
+                    {
+                        
+                        Producto producto = dc.Productos.Where( producto => producto.nombre == descontar.producto ).FirstOrDefault()!;
+
+                        int nuevas_existencias = producto.existencias_restantes - descontar.cantidad;
+
+                        if( nuevas_existencias < 0 )
+                        {
+                            nuevas_existencias = 0;
+                        }
+
+                        producto.existencias_restantes = nuevas_existencias;
+
+                        dc.SaveChanges();
+
+                    }
+
+                    return true;
+                    
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // FUNCION QUE DEVUELVE LOS PRODUCTOS QUE SE SELECCIONARON EN EL PEDIDO
+        // Y LOS CONCATENA EN UN STRING CON SU IMPORTE Y SU TOTAL AL PEDIDO
+        private DescontarProductos preguntarProductos( List<string> producto_listado , Pedido? pedido = null )
         {
             
-            ConsoleHooks.printRule("[red]Selecciona los productos de la orden:[/]");
+            ConsoleHooks.printRule("[red]Selecciona los productos del pedido:[/]");
 
             // SELECCIONAMOS EL PRODUCTO
 
@@ -338,10 +408,39 @@ namespace Proyecto_Final.servicios
 
             float importe_general = 0;
 
+            List<Descontar> cantidades_descontar = new List<Descontar>();
+
             foreach( string _producto in productos )
             {
                 
-                int cantidad = ConsoleHooks.askNumero($"Ingresa la cantidad de {_producto}: ");
+                int existencias = obtenerExistenciasDisponiblesProducto(_producto);
+                
+                int cantidad = 0;
+
+                while( true )
+                {
+                    
+                    cantidad = ConsoleHooks.askInt($"Ingresa la cantidad de {_producto}: [green](Existencias disponibles: {existencias})[/]");
+                    
+                    if( cantidad > existencias )
+                    {
+                        ConsoleHooks.printRule("[red]Existencias insuficientes[/]");
+                    }
+                    else
+                    {
+                        
+                        Descontar descontarExistencias = new Descontar() {
+                            cantidad = cantidad,
+                            producto = _producto
+                        };
+
+                        cantidades_descontar.Add(descontarExistencias);
+
+                        break;
+
+                    }
+                    
+                }
 
                 double precio = obtenerPrecioProducto(_producto);
 
@@ -359,7 +458,12 @@ namespace Proyecto_Final.servicios
                 pedido.importe = importe_general;
             }
 
-            return producto;
+            DescontarProductos response = new DescontarProductos() {
+                producto = producto,
+                cantidades_descontar = cantidades_descontar
+            };
+
+            return response;
 
         }
         
@@ -367,143 +471,127 @@ namespace Proyecto_Final.servicios
         public int crear()
         {
             
-            try
+            Menu.showMainLogo();
+
+            // CREO EL PEDIDO
+
+            Pedido pedido_nuevo = new Pedido()
             {
+                mesa = 0,
+                tipo_cobro = null
+            };
 
-                Menu.showMainLogo();
-
-                // CREO EL PEDIDO
-
-                Pedido pedido_nuevo = new Pedido()
-                {
-                    mesa = 0,
-                    tipo_cobro = null
-                };
-
-                // ME TRAIGO LOS PRODUCTOS DE LA BASE DE DATOS
+            // ME TRAIGO LOS PRODUCTOS DE LA BASE DE DATOS
                 
-                List<string> producto_listado = new List<string>();
+            List<string> producto_listado = new List<string>();
                 
-                AnsiConsole.Status().Start("Cargando productos...", ctx =>
-                {
-                    producto_listado = SProducto.obtenerProductosListado();
-                });
+            AnsiConsole.Status().Start("Cargando productos...", ctx =>
+            {
+                producto_listado = SProducto.obtenerProductosListado();
+                Thread.Sleep(700);
+            });
                 
-                Menu.showMainLogo();
+            Menu.showMainLogo();
                 
-                string producto = this.preguntarProductos(producto_listado , pedido_nuevo);
+            DescontarProductos response = this.preguntarProductos(producto_listado , pedido_nuevo);
 
-                pedido_nuevo.producto = producto;
+            pedido_nuevo.producto = response.producto;
 
-                // SELECCIONAMOS EL TIPO DE PEDIDO
+            // SELECCIONAMOS EL TIPO DE PEDIDO
 
-                var tipo_pedido = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("Selecciona el tipo de pedido:")
-                        .PageSize(3)
-                        .AddChoices(new[] {
-                            "1) Comer aqui", "2) Para llevar",
-                        }));
+            ConsoleHooks.printRule("[red]Selecciona el tipo de pedido[/]");
 
-                // SI ES PARA COMER AQUI
+            string tipo_pedido = ConsoleHooks.askOpciones( this.OPCIONES_PEDIDO , null );
 
-                if( tipo_pedido == "1) Comer aqui" ) {
-                    
-                    // ASIGNAMOS QUE ES PARA COMER AQUI
-                    pedido_nuevo.tipo_pedido = 0;
-                    
-                    // PREGUNTAMOS EL NUMERO DE ESA Y LO ASIGNAMOS
-                    int mesa = ConsoleHooks.askNumero("Ingresa el numero de mesa: ");
+            // SI ES PARA COMER AQUI
 
-                    pedido_nuevo.mesa = mesa;
-
-                }
-                else
-                {
-                    pedido_nuevo.tipo_pedido = 1;
-                }
-
-                // PEDIMOS EL IMPORTE
-
-                // float importe = ConsoleHooks.askDecimal("[red]Ingresa el importe del pedido:[/]");
+            if( tipo_pedido == "1) Comer aqui" ) {
                 
-                // pedido_nuevo.importe = importe;
-
-                // CALCULAMOS EL IVA 16%
-                pedido_nuevo.iva = (float)(pedido_nuevo.importe * 0.16);
+                // ASIGNAMOS QUE ES PARA COMER AQUI
+                pedido_nuevo.tipo_pedido = 0;
                 
-                // SUMAMOS IVA Y IMPORTE
-                pedido_nuevo.total = (float)(pedido_nuevo.importe  + pedido_nuevo.iva);
-
-                // 0 - PENDIENTE
-                // 1 - TERMINADO
-                
-                // DECLARO QUE SEA 0 PORQUE SIGNIFICA 'PENDIENTE'
-
-                pedido_nuevo.status = 0;
-
-                Menu.showMainLogo();
-
-                ConsoleHooks.printRule("[red]Pedido:[/]");
-
-                // AGREGAMOS LA TABLA
-
-                var table_pedido = new Table();
-
-                table_pedido.BorderColor(Color.Yellow1);
-                table_pedido.Border(TableBorder.Rounded);
-                table_pedido.Expand();
-
-                table_pedido.AddColumn("Numero Orden");
-                table_pedido.AddColumn("Tipo Pedido");
-                table_pedido.AddColumn("Status");
-                table_pedido.AddColumn("Mesa");
-                table_pedido.AddColumn("Producto");
-                table_pedido.AddColumn("Importe");
-                table_pedido.AddColumn("IVA");
-                table_pedido.AddColumn("Total");
-
-                int numero_orden = obtenerUltimoIdOrden();
-
-                // AGREGAMOS UNA FILA CON LOS DATOS DEL PEDIDO
-
-                table_pedido.AddRow(
-                    $"{numero_orden}",
-                    $"{Utilidades.renderTipoPedido(pedido_nuevo.tipo_pedido)}",
-                    $"{Utilidades.renderStatusPedido(pedido_nuevo.status)}",
-                    $"{pedido_nuevo.mesa}",
-                    $"{pedido_nuevo.producto}",
-                    $"{Utilidades.renderDinero(pedido_nuevo.importe)}",
-                    $"{Utilidades.renderDinero(pedido_nuevo.iva)}",
-                    $"{Utilidades.renderDinero(pedido_nuevo.total)}"
+                // PREGUNTAMOS EL NUMERO DE ESA Y LO ASIGNAMOS
+                int mesa = ConsoleHooks.askInt(
+                    "Ingresa el numero de mesa: ",
+                    "Ingresa una mesa valida" ,
+                    true, 
+                    false
                 );
-                
-                AnsiConsole.Write(table_pedido);
 
-                Console.WriteLine("");
-
-                bool response = this.agregarPedido( pedido_nuevo );
-
-                if( response )
-                {
-                    ConsoleHooks.printRule("[red]Pedido agregado correctamente[/]");
-                    return 1;
-                }
-
-                ConsoleHooks.printRule("[yellow]Error: no se pudo agregar el pedido[/]");
+                pedido_nuevo.mesa = mesa;
 
             }
-            catch( Exception e )
+            else
+            {
+                pedido_nuevo.tipo_pedido = 1;
+            }
+            
+            // CALCULAMOS EL IVA 16%
+            pedido_nuevo.iva = (float)(pedido_nuevo.importe * 0.16);
+                
+            // SUMAMOS IVA Y IMPORTE
+            pedido_nuevo.total = (float)(pedido_nuevo.importe  + pedido_nuevo.iva);
+
+            // 0 - PENDIENTE
+            // 1 - TERMINADO
+                
+            // DECLARO QUE SEA 0 PORQUE SIGNIFICA 'PENDIENTE'
+            pedido_nuevo.status = 0;
+
+            Menu.showMainLogo();
+
+            ConsoleHooks.printRule("[red]Pedido:[/]");
+
+            // AGREGAMOS LA TABLA
+
+            Table table_pedido = new Table();
+
+            table_pedido.BorderColor(Color.Yellow1);
+            table_pedido.Border(TableBorder.Rounded);
+            table_pedido.Expand();
+            table_pedido.AddColumn("Numero Pedido");
+            table_pedido.AddColumn("Tipo Pedido");
+            table_pedido.AddColumn("Status");
+            table_pedido.AddColumn("Mesa");
+            table_pedido.AddColumn("Producto");
+            table_pedido.AddColumn("Importe");
+            table_pedido.AddColumn("IVA");
+            table_pedido.AddColumn("Total");
+
+            // OBTENEMOS EL ID DE LA ULTIMA ORDEN GENERADA MAS UNO
+            int numero_orden = obtenerUltimoIdOrden();
+
+            // AGREGAMOS UNA FILA CON LOS DATOS DEL PEDIDO
+
+            table_pedido.AddRow(
+                $"{numero_orden}",
+                $"{Utilidades.renderTipoPedido(pedido_nuevo.tipo_pedido)}",
+                $"{Utilidades.renderStatusPedido(pedido_nuevo.status)}",
+                $"{pedido_nuevo.mesa}",
+                $"{pedido_nuevo.producto}",
+                $"{Utilidades.renderDinero(pedido_nuevo.importe)}",
+                $"{Utilidades.renderDinero(pedido_nuevo.iva)}",
+                $"{Utilidades.renderDinero(pedido_nuevo.total)}"
+            );
+                
+            AnsiConsole.Write(table_pedido);
+
+            Console.WriteLine("");
+
+            descontarExistencias(response.cantidades_descontar);
+
+            bool _response = this.agregarPedido( pedido_nuevo );
+
+            if( _response )
             {
                 
-                System.Console.WriteLine(e);
-                System.Console.WriteLine(e.Message);
-
-                ConsoleHooks.printRule("[yellow]Error: no se pudo agregar el pedido[/]");
-
+                ConsoleHooks.printRule("[red]Pedido agregado correctamente[/]");
+                
                 return ROUTER_REDIRECT;
 
             }
+
+            ConsoleHooks.printRule("[yellow]Error: no se pudo agregar el pedido[/]");            
 
             return ROUTER_REDIRECT;
 
@@ -582,16 +670,22 @@ namespace Proyecto_Final.servicios
 
             this.listar();
 
-            int id = ConsoleHooks.askNumero("[red]Ingresa el id de la orden a actualizar:[/]");
+            int id = ConsoleHooks.askInt(
+                "[red]Ingresa el id del pedido a actualizar:[/]",
+                "Ingresa un pedido valido",
+                true,
+                false
+            );
             
             Pedido pedido = new Pedido();
 
-             AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
+            AnsiConsole.Status().Start("Cargando pedidos...", ctx =>
             {
                 pedido = obtenerPedidoPorID(id)!;
             });
 
-            if( pedido == null )
+            // SI NO EXISTE EL PEDIDO O ESTA TERMINADO (SOLO SE PUEDEN ACTUALIZAR LOS PENDIENTES)
+            if( pedido == null || pedido.status == 1 )
             {
                 
                 ConsoleHooks.printRule("[red]Pedido no valido[/]");
@@ -600,7 +694,9 @@ namespace Proyecto_Final.servicios
 
             }
 
-            string opcion = ConsoleHooks.askOpciones(OPCIONES_ACTUALIZAR_PEDIDO.ToList());
+            ConsoleHooks.printRule("[red]Elige la opcion a actualizar[/]");
+
+            string opcion = ConsoleHooks.askOpciones(OPCIONES_ACTUALIZAR_PEDIDO.ToList() , null);
             
             switch( opcion )
             {
@@ -618,8 +714,11 @@ namespace Proyecto_Final.servicios
                     
                 break;
                 case "2) Mesa":
-                    int mesa = ConsoleHooks.askNumero("Ingresa el numero de mesa: ");
+                    
+                    int mesa = ConsoleHooks.askInt("Ingresa el numero de mesa: ");
+
                     pedido.mesa = mesa;
+
                 break;
                 case "3) Productos":
                     
@@ -632,13 +731,13 @@ namespace Proyecto_Final.servicios
                     
                     Menu.showMainLogo();
                     
-                    string producto = this.preguntarProductos(producto_listado , pedido);
+                    DescontarProductos __response = this.preguntarProductos(producto_listado , pedido);
 
                     pedido.iva = (float)(pedido.importe * 0.16);
                 
                     pedido.total = (float)(pedido.importe  + pedido.iva);
 
-                    pedido.producto = producto;
+                    pedido.producto = __response.producto;
 
                 break;
             }

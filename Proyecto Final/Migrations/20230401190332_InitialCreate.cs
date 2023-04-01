@@ -42,6 +42,8 @@ namespace ProyectoFinal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     precio = table.Column<double>(type: "float", nullable: false),
+                    existenciasiniciales = table.Column<int>(name: "existencias_iniciales", type: "int", nullable: false),
+                    existenciasrestantes = table.Column<int>(name: "existencias_restantes", type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -68,14 +70,14 @@ namespace ProyectoFinal.Migrations
 
             migrationBuilder.InsertData(
                 table: "Productos",
-                columns: new[] { "id", "CreatedDate", "nombre", "precio" },
+                columns: new[] { "id", "CreatedDate", "existencias_iniciales", "existencias_restantes", "nombre", "precio" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hamburguesa con queso", 99.989999999999995 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Coca cola 600ml", 19.989999999999998 },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pepsi 600ml", 15.99 },
-                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Papas fritas medianas", 49.990000000000002 },
-                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nuggets de pollo (6 piezas)", 89.989999999999995 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5, "Hamburguesa con queso", 99.989999999999995 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5, "Coca cola 600ml", 19.989999999999998 },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5, "Pepsi 600ml", 15.99 },
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5, "Papas fritas medianas", 49.990000000000002 },
+                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5, "Nuggets de pollo (6 piezas)", 89.989999999999995 }
                 });
 
             migrationBuilder.InsertData(

@@ -27,30 +27,11 @@ class Program
 
             if( response )
             {
-                try
-                {
-                    
-                    bool continuar = menu.mostrarMenu(null);
-                    
-                    if( !continuar )
-                    {
-                        Menu.showMainLogo();
-                        ConsoleHooks.printRule("Fin del programa");
-                        break;
-                    }
-
-                }
-                catch
-                {
-                    
-                }
-
+                
                 Menu.showMainLogo();
 
                 ConsoleHooks.printRule("[red]Autenticacion correcta[/]");
                 
-                Thread.Sleep(700);
-
                 while( true )
                 {
                     bool continuar = menu.mostrarMenu(null);

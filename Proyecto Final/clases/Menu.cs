@@ -61,10 +61,6 @@ namespace Proyecto_Final.clases
 
             AnsiConsole.Write(rule);
 
-            // Console.WriteLine("Valor de retorno");
-            // Console.WriteLine(valor);
-            // Console.ReadKey();
-
             int opcion = 0;
 
             if( valor == null || valor == 0 )
